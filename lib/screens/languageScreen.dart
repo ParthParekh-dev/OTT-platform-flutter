@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:idragon_pro/screens/iDragonMain.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LanguageScreen extends StatelessWidget {
   @override
@@ -61,7 +63,7 @@ class RadioGroupWidget extends State {
     //   translation: 'ગુજરાતી',
     // ),
     LanguageList(
-      index: 6,
+      index: 4,
       name: "Panjabi",
       translation: 'ਪੰਜਾਬੀ',
     ),
@@ -71,17 +73,17 @@ class RadioGroupWidget extends State {
     //   translation: 'മലയാളം',
     // ),
     LanguageList(
-      index: 8,
+      index: 5,
       name: "Tamil",
       translation: 'தமிழ்',
     ),
     LanguageList(
-      index: 9,
+      index: 6,
       name: "Telugu",
       translation: 'తెలుగు',
     ),
     LanguageList(
-      index: 10,
+      index: 7,
       name: "Kannada",
       translation: 'ಕನ್ನಡ',
     ),
@@ -197,7 +199,12 @@ class RadioGroupWidget extends State {
               buttonText: 'Continue',
               width: MediaQuery.of(context).size.width*0.8,
               onpressed: (){
-
+                Navigator.pushReplacement(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        duration: Duration(milliseconds: 500),
+                        child: IDragonMain()));
           }),
         )
       ],
