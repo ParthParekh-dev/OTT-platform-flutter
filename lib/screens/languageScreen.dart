@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:idragon_pro/widgets/roundCornerButton.dart';
 
 class LanguageScreen extends StatelessWidget {
   @override
@@ -21,7 +22,8 @@ class RadioGroup extends StatefulWidget {
 class LanguageList {
   String name;
   int index;
-  LanguageList({required this.name, required this.index});
+  String translation;
+  LanguageList({required this.name, required this.index,required this.translation});
 }
 
 class RadioGroupWidget extends State {
@@ -36,100 +38,168 @@ class RadioGroupWidget extends State {
     LanguageList(
       index: 1,
       name: "English",
+      translation: 'English',
     ),
     LanguageList(
       index: 2,
       name: "Hindi",
+      translation: 'हिन्दी',
     ),
     LanguageList(
       index: 3,
       name: "Marathi",
+      translation: 'मराठी',
     ),
-    LanguageList(
-      index: 4,
-      name: "Bangla",
-    ),
-    LanguageList(
-      index: 5,
-      name: "Gujarati",
-    ),
+    // LanguageList(
+    //   index: 4,
+    //   name: "Bangla",
+    //   translation: 'বাংলা',
+    // ),
+    // LanguageList(
+    //   index: 5,
+    //   name: "Gujarati",
+    //   translation: 'ગુજરાતી',
+    // ),
     LanguageList(
       index: 6,
-      name: "Punjabi",
+      name: "Panjabi",
+      translation: 'ਪੰਜਾਬੀ',
     ),
-    LanguageList(
-      index: 7,
-      name: "Malayalam",
-    ),
+    // LanguageList(
+    //   index: 7,
+    //   name: "Malayalam",
+    //   translation: 'മലയാളം',
+    // ),
     LanguageList(
       index: 8,
       name: "Tamil",
+      translation: 'தமிழ்',
     ),
     LanguageList(
       index: 9,
       name: "Telugu",
+      translation: 'తెలుగు',
     ),
     LanguageList(
       index: 10,
-      name: "Kanada",
+      name: "Kannada",
+      translation: 'ಕನ್ನಡ',
     ),
-    LanguageList(
-      index: 11,
-      name: "Odia",
-    ),
+    // LanguageList(
+    //   index: 11,
+    //   name: "Odia",
+    //   translation: 'ଓଡିଆ',
+    // ),
   ];
 
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-            padding : EdgeInsets.all(14.0),
-            child: Text('$radioItem', style: TextStyle(fontSize: 23,color: Colors.white))
-        ),
 
+    // var size = MediaQuery.of(context).size;
+    // final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    // final double itemWidth = size.width / 2;
+
+    return Column(
+      children:[
+        Image.asset('assets/logo.png',height: 80,),
+        Align(
+          alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Text('Select Language', style: TextStyle(fontSize: 18,color: Colors.white)),
+            )),
         Expanded(
             child: Container(
-              // child: Column(
-              //   children:
-              //   fList.map((data) => Card(
-              //     color: Colors.amber,
-              //     child: RadioListTile(
-              //       title: Text("${data.name}",style: TextStyle(color: Colors.white),),
-              //       groupValue: id,
-              //       value: data.index,
-              //       onChanged: (val) {
-              //         setState(() {
-              //           radioItem = data.name ;
-              //           id = data.index;
-              //         });
-              //       },
-              //     ),
-              //   )).toList(),
-              // ),
               child: GridView.count(
-                  crossAxisCount: 4,
-                  childAspectRatio: 1.0,
+                  crossAxisCount: 2,
                   padding: const EdgeInsets.all(4.0),
                   mainAxisSpacing: 4.0,
                   crossAxisSpacing: 4.0,
-                  children: <String>[
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                    'http://www.for-example.org/img/main/forexamplelogo.png',
-                  ].map((String url) {
+                  childAspectRatio: 1.5,
+                  controller: new ScrollController(keepScrollOffset: false),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  children: fList.map((data) {
                     return GridTile(
-                        child: Image.network(url, fit: BoxFit.cover));
+                      child:Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: GestureDetector(
+                          onTap: (){
+                            setState(() {
+                              radioItem = data.name ;
+                              id = data.index;
+                            });
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                gradient: (id == data.index)?LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  stops: [0.0, 1.0],
+                                  colors: [
+                                    Color(0xFFED0205),
+                                    Color(0xFFFE8F54),
+                                  ],
+                                ):null,
+                                color: Color(0xFF999999),
+                                  borderRadius: BorderRadius.all(Radius.circular(20))
+                              ),
+                              child: Stack(
+                                children :[
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Align(
+                                      alignment: Alignment.bottomRight,
+                                        child: Image.asset("assets/lang/${data.name}.png")),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Text(data.name,style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Radio(
+                                              fillColor: MaterialStateColor.resolveWith((states) => Colors.white),
+                                              hoverColor: Colors.white,
+                                              groupValue: id,
+                                              value: data.index,
+                                              onChanged: (val) {
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 15.0),
+                                        child: Text(data.translation),
+                                      ),
+                                    ],
+                                  )
+
+                                ],
+                              ),
+                          ),
+                        ),
+                      ),);
                   }).toList()),
             ),),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: RoundCornerButton(
+              buttonText: 'Continue',
+              width: MediaQuery.of(context).size.width*0.8,
+              onpressed: (){
 
+          }),
+        )
       ],
     );
   }
