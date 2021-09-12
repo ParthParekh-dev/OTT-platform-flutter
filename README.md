@@ -1,6 +1,6 @@
-# idragon_pro
 
-iDragon Pro OTT flutter project.
+
+OTT flutter project.
 
 ## Getting Started
 
