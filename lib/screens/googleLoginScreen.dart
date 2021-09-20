@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:idragon_pro/screens/languageScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerIconButton.dart';
+import 'package:page_transition/page_transition.dart';
 
 class GoogleLoginScreen extends StatelessWidget {
   const GoogleLoginScreen({Key? key}) : super(key: key);
@@ -20,6 +22,7 @@ class GoogleLoginScreen extends StatelessWidget {
             Expanded(
               flex: 7,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text('WELCOME',style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -43,7 +46,12 @@ class GoogleLoginScreen extends StatelessWidget {
                       buttonText: 'Enter',
                       width: MediaQuery.of(context).size.width*0.4,
                       onpressed: (){
-
+                        Navigator.pushReplacement(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                duration: Duration(milliseconds: 500),
+                                child: LanguageScreen()));
                       },
                       imagePath: 'assets/google.png'),
 
