@@ -57,8 +57,7 @@ class RoundCornerButton extends StatelessWidget {
             child: Text(
               buttonText,
               style: TextStyle(
-                fontSize: 18,
-                // fontWeight: FontWeight.w700,
+                fontSize: 16,
                 color: Colors.white,
               ),
             ),

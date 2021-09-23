@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:idragon_pro/screens/iDragonMain.dart';
 import 'package:idragon_pro/screens/languageScreen.dart';
 import 'package:idragon_pro/screens/splashScreen.dart';
+import 'package:idragon_pro/screens/videoDetailScreen.dart';
 
 void main() async {
   await GetStorage.init();
