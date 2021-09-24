@@ -1,12 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:idragon_pro/controllers/homePageController.dart';
-import 'package:idragon_pro/models/homePageResponse.dart';
 import 'package:idragon_pro/pageStructure.dart';
 import 'package:idragon_pro/screens/videoDetailScreen.dart';
-import 'package:idragon_pro/widgets/roundCornerButton.dart';
-import 'package:idragon_pro/widgets/roundCornerIconButton.dart';
 import 'package:page_transition/page_transition.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -80,8 +78,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                  child: Image.network(
-                                    banner.bannerUrl,
+                                  child: CachedNetworkImage(
+                                    imageUrl: banner.bannerUrl,
+                                    fit: BoxFit.contain,
+                                    placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
                                   ),
                                 ),
                               );
@@ -133,10 +136,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       CarouselSlider.builder(
                         options: CarouselOptions(
                           initialPage: 0,
+                          viewportFraction: 1,
+                          aspectRatio: 16 / 9,
                           autoPlay: false,
                           enableInfiniteScroll: false,
                           enlargeCenterPage: false,
-                          viewportFraction: 1,
                         ),
                         itemCount: (category.banners?.length),
                         itemBuilder: (context, index, realIdx) {
@@ -161,8 +165,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                         0.25,
                                     margin:
                                         EdgeInsets.symmetric(horizontal: 10),
-                                    child: Image.network(idx.iBannerUrl,
-                                        fit: BoxFit.fill),
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.cover,
+                                      imageUrl: idx.iBannerUrl,
+                                      placeholder: (context, url) => Center(
+                                          child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          Center(child: Icon(Icons.error)),
+                                    ),
                                   ),
                                 ),
                               );

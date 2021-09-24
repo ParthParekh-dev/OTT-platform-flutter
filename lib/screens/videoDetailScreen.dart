@@ -33,8 +33,11 @@ class VideoDetailScreen extends StatelessWidget {
                             imageUrl: videoDetailController
                                 .videoDetails.value!.nBigBannerUrl,
                             fit: BoxFit.contain,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
+                            placeholder: (context, url) => Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.6,
+                                child:
+                                    Center(child: CircularProgressIndicator())),
                             errorWidget: (context, url, error) =>
                                 Icon(Icons.error),
                           ),
@@ -133,7 +136,13 @@ class VideoDetailScreen extends StatelessWidget {
                           color: Colors.red,
                         ),
                       ),
-                      VideoDetailTile(subtitle: 'Action,Drama', title: 'Genre'),
+                      VideoDetailTile(
+                          subtitle: videoDetailController
+                              .videoDetails.value!.genre
+                              .toString()
+                              .replaceAll('[', '')
+                              .replaceAll(']', ''),
+                          title: 'Genre'),
                       VideoDetailTile(
                           subtitle: videoDetailController
                               .videoDetails.value!.sDirector,
@@ -142,14 +151,16 @@ class VideoDetailScreen extends StatelessWidget {
                           subtitle: videoDetailController
                               .videoDetails.value!.starCast
                               .toString()
-                              .toString()
                               .replaceAll('[', '')
                               .replaceAll(']', ''),
                           title: 'Cast'),
                       VideoDetailTile(
                           subtitle: videoDetailController
-                              .videoDetails.value!.language,
+                              .videoDetails.value!.category,
                           title: 'Language'),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.1,
+                      )
                     ],
                   ),
                 ],

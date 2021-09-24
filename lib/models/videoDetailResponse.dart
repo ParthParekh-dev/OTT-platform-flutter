@@ -128,8 +128,8 @@ class Video {
   dynamic statusName;
   dynamic createdById;
   dynamic modifiedById;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String createdAt;
+  String updatedAt;
   dynamic deletedAt;
   String s1080JobId;
   String s1080VideoUrl;
@@ -380,8 +380,8 @@ class Package {
   dynamic statusName;
   dynamic createdById;
   dynamic modifiedById;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  String createdAt;
+  String updatedAt;
   dynamic deletedAt;
 
   factory Package.fromJson(Map<String, dynamic> json) => Package(
@@ -416,10 +416,8 @@ class Package {
         statusName: json["StatusName"],
         createdById: json["CreatedById"],
         modifiedById: json["ModifiedById"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
         deletedAt: json["deleted_at"],
       );
 
@@ -455,7 +453,7 @@ class Package {
         "StatusName": statusName,
         "CreatedById": createdById,
         "ModifiedById": modifiedById,
-        "created_at": createdAt == null ? null : createdAt.toString(),
+        "created_at": createdAt.toString(),
         "updated_at": updatedAt.toString(),
         "deleted_at": deletedAt,
       };
@@ -473,17 +471,15 @@ class PaymentGateway {
   int id;
   String pgName;
   int isActive;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  String createdAt;
+  String updatedAt;
 
   factory PaymentGateway.fromJson(Map<String, dynamic> json) => PaymentGateway(
         id: json["id"],
         pgName: json["PgName"],
         isActive: json["isActive"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
       );
 
   Map<String, dynamic> toJson() => {
