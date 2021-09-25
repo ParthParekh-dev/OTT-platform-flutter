@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:idragon_pro/screens/iDragonMain.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
-import 'package:page_transition/page_transition.dart';
 
 class LanguageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body: SafeArea(
-              child : Center(
-                child:RadioGroup(),
-              )
-          )
-      );
+        body: SafeArea(
+            child: Center(
+      child: RadioGroup(),
+    )));
   }
 }
 
@@ -25,11 +23,11 @@ class LanguageList {
   String name;
   int index;
   String translation;
-  LanguageList({required this.name, required this.index,required this.translation});
+  LanguageList(
+      {required this.name, required this.index, required this.translation});
 }
 
 class RadioGroupWidget extends State {
-
   // Default Radio Button Item
   String radioItem = 'English';
 
@@ -95,117 +93,125 @@ class RadioGroupWidget extends State {
   ];
 
   Widget build(BuildContext context) {
-
     // var size = MediaQuery.of(context).size;
     // final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     // final double itemWidth = size.width / 2;
 
     return Column(
-      children:[
-        Image.asset('assets/logo.png',height: 80,),
+      children: [
+        Image.asset(
+          'assets/logo.png',
+          height: 80,
+        ),
         Align(
-          alignment: Alignment.topLeft,
+            alignment: Alignment.topLeft,
             child: Padding(
               padding: const EdgeInsets.only(left: 15),
-              child: Text('Select Language', style: TextStyle(fontSize: 18,color: Colors.white)),
+              child: Text('Select Language',
+                  style: TextStyle(fontSize: 18, color: Colors.white)),
             )),
         Expanded(
-            child: Container(
-              child: GridView.count(
-                  crossAxisCount: 2,
-                  padding: const EdgeInsets.all(4.0),
-                  mainAxisSpacing: 4.0,
-                  crossAxisSpacing: 4.0,
-                  childAspectRatio: 1.5,
-                  controller: new ScrollController(keepScrollOffset: false),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  children: fList.map((data) {
-                    return GridTile(
-                      child:Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: GestureDetector(
-                          onTap: (){
-                            setState(() {
-                              radioItem = data.name ;
-                              id = data.index;
-                            });
-                          },
-                          child: Container(
-                              decoration: BoxDecoration(
-                                gradient: (id == data.index)?LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  stops: [0.0, 1.0],
-                                  colors: [
-                                    Color(0xFFED0205),
-                                    Color(0xFFFE8F54),
-                                  ],
-                                ):null,
-                                color: Color(0xFF999999),
-                                  borderRadius: BorderRadius.all(Radius.circular(20))
+          child: Container(
+            child: GridView.count(
+                crossAxisCount: 2,
+                padding: const EdgeInsets.all(4.0),
+                mainAxisSpacing: 4.0,
+                crossAxisSpacing: 4.0,
+                childAspectRatio: 1.5,
+                controller: new ScrollController(keepScrollOffset: false),
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                children: fList.map((data) {
+                  return GridTile(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            radioItem = data.name;
+                            id = data.index;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: (id == data.index)
+                                  ? LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      stops: [0.0, 1.0],
+                                      colors: [
+                                        Color(0xFFED0205),
+                                        Color(0xFFFE8F54),
+                                      ],
+                                    )
+                                  : null,
+                              color: Color(0xFF999999),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Image.asset(
+                                        "assets/lang/${data.name}.png")),
                               ),
-                              child: Stack(
-                                children :[
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Align(
-                                      alignment: Alignment.bottomRight,
-                                        child: Image.asset("assets/lang/${data.name}.png")),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Text(data.name,style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),),
+                                      Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Text(
+                                          data.name,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Radio(
-                                              fillColor: MaterialStateColor.resolveWith((states) => Colors.white),
-                                              hoverColor: Colors.white,
-                                              groupValue: id,
-                                              value: data.index,
-                                              onChanged: (val) {
-                                              },
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 15.0),
-                                        child: Text(data.translation),
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Radio(
+                                          fillColor:
+                                              MaterialStateColor.resolveWith(
+                                                  (states) => Colors.white),
+                                          hoverColor: Colors.white,
+                                          groupValue: id,
+                                          value: data.index,
+                                          onChanged: (val) {},
+                                        ),
                                       ),
                                     ],
-                                  )
-
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 0.0, horizontal: 15.0),
+                                    child: Text(data.translation),
+                                  ),
                                 ],
-                              ),
+                              )
+                            ],
                           ),
                         ),
-                      ),);
-                  }).toList()),
-            ),),
+                      ),
+                    ),
+                  );
+                }).toList()),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(15.0),
           child: RoundCornerButton(
               buttonText: 'Continue',
-              width: MediaQuery.of(context).size.width*0.8,
-              onpressed: (){
-                Navigator.pushReplacement(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        duration: Duration(milliseconds: 500),
-                        child: IDragonMain()));
-          }),
+              width: MediaQuery.of(context).size.width * 0.8,
+              onpressed: () {
+                Get.offAll(() => IDragonMain());
+              }),
         )
       ],
     );

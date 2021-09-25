@@ -31,7 +31,6 @@ dependencies:
   http: ^0.12.2
   fluttertoast: ^8.0.7
   lottie: ^1.1.0
-  page_transition: ^2.0.2
   convex_bottom_bar: ^3.0.0
   get: ^4.3.8
   get_storage: any

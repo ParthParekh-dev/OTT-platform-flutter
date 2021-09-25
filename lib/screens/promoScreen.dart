@@ -4,7 +4,6 @@ import 'package:idragon_pro/controllers/promoController.dart';
 import 'package:idragon_pro/screens/iDragonMain.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:idragon_pro/widgets/videoItems.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:video_player/video_player.dart';
 
 class PromoScreen extends StatelessWidget {
@@ -38,11 +37,7 @@ class PromoScreen extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 onpressed: () {
                                   if (promoController.isTimerOver.value) {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                IDragonMain()));
+                                    Get.to(() => IDragonMain());
                                   } else {
                                     null;
                                   }

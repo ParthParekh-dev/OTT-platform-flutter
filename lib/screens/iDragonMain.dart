@@ -13,7 +13,7 @@ class IDragonMain extends StatefulWidget {
 }
 
 class _IDragonMainState extends State<IDragonMain> {
-  final euman_data = GetStorage();
+  final iDragon_data = GetStorage();
   int _pageIndex = 0;
 
   Map<int, GlobalKey> navigatorKeys = {
@@ -26,7 +26,7 @@ class _IDragonMainState extends State<IDragonMain> {
   };
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
 

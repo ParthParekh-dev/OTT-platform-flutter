@@ -1,10 +1,8 @@
+// @dart=2.9
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:idragon_pro/screens/iDragonMain.dart';
-import 'package:idragon_pro/screens/languageScreen.dart';
-import 'package:idragon_pro/screens/promoScreen.dart';
 import 'package:idragon_pro/screens/splashScreen.dart';
-import 'package:idragon_pro/screens/videoDetailScreen.dart';
 
 void main() async {
   await GetStorage.init();
@@ -14,7 +12,9 @@ void main() async {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      defaultTransition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 500),
       theme: ThemeData(
         textTheme: TextTheme(
           bodyText2: TextStyle(
@@ -24,7 +24,7 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFF170829),
       ),
       debugShowCheckedModeBanner: false,
-      home: PromoScreen(),
+      home: Splash(),
     );
   }
 }

@@ -49,7 +49,7 @@ class VideoDetailScreen extends StatelessWidget {
                                 child: IconButton(
                                   icon: Icon(Icons.arrow_back),
                                   onPressed: () {
-                                    Navigator.pop(context);
+                                    Get.back();
                                   },
                                 ),
                               ),
