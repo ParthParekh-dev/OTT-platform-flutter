@@ -143,6 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Expanded(
                                 child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: ScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   itemCount: (category.banners?.length),
                                   itemBuilder: (context, index) {

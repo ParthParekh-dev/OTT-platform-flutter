@@ -4,7 +4,7 @@ import 'package:idragon_pro/controllers/promoController.dart';
 import 'package:idragon_pro/screens/iDragonMain.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:idragon_pro/widgets/videoItems.dart';
-import 'package:video_player/video_player.dart';
+// import 'package:video_player/video_player.dart';
 
 class PromoScreen extends StatelessWidget {
   final PromoController promoController = Get.put(PromoController());
@@ -19,13 +19,16 @@ class PromoScreen extends StatelessWidget {
                   ? Center(child: (CircularProgressIndicator()))
                   : Stack(
                       children: [
-                        VideoItems(
-                          videoPlayerController: VideoPlayerController.network(
-                              promoController
-                                  .promoDetails.value!.flashVideoUrl),
-                          looping: false,
-                          autoplay: true,
-                        ),
+                        // VideoItems(
+                        //   videoPlayerController: VideoPlayerController.network(
+                        //       promoController
+                        //           .promoDetails.value!.flashVideoUrl),
+                        //   looping: false,
+                        //   autoplay: true,
+                        //   showControls: false,
+                        //   fullScreenDefault: false,
+                        //   aspectRatio: 9 / 16,
+                        // ),
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Padding(

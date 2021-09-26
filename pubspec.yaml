@@ -36,8 +36,7 @@ dependencies:
   get_storage: any
   carousel_slider: ^4.0.0
   cached_network_image: any
-  chewie: ^1.0.0
-  video_player: any
+  better_player: any
 
 dev_dependencies:
   flutter_test:

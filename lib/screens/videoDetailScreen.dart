@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:idragon_pro/controllers/videoDetailController.dart';
+import 'package:idragon_pro/screens/videoScreen.dart';
+// import 'package:idragon_pro/screens/videoScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 
 class VideoDetailScreen extends StatelessWidget {
@@ -81,11 +83,25 @@ class VideoDetailScreen extends StatelessWidget {
                           RoundCornerButton(
                               buttonText: 'Trailer',
                               width: MediaQuery.of(context).size.width * 0.4,
-                              onpressed: () {}),
+                              onpressed: () {
+                                Get.to(() => VideoPlayer(), arguments: [
+                                  {
+                                    "url": videoDetailController
+                                        .videoDetails.value!.trailerUrl
+                                  },
+                                ]);
+                              }),
                           RoundCornerButton(
                               buttonText: 'Play',
                               width: MediaQuery.of(context).size.width * 0.4,
-                              onpressed: () {})
+                              onpressed: () {
+                                Get.to(() => VideoPlayer(), arguments: [
+                                  {
+                                    "url": videoDetailController
+                                        .videoDetails.value!.videoUrl
+                                  },
+                                ]);
+                              })
                         ],
                       ),
                       Row(
