@@ -7,10 +7,12 @@ class LanguageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-            child: Center(
-      child: RadioGroup(),
-    )));
+      body: SafeArea(
+        child: Center(
+          child: RadioGroup(),
+        ),
+      ),
+    );
   }
 }
 
@@ -22,9 +24,15 @@ class RadioGroup extends StatefulWidget {
 class LanguageList {
   String name;
   int index;
+  String languageCode;
+  String countryCode;
   String translation;
   LanguageList(
-      {required this.name, required this.index, required this.translation});
+      {required this.name,
+      required this.index,
+      required this.translation,
+      required this.languageCode,
+      required this.countryCode});
 }
 
 class RadioGroupWidget extends State {
@@ -34,22 +42,27 @@ class RadioGroupWidget extends State {
   // Group Value for Radio Button.
   int id = 1;
 
+  var locale = Locale('en', 'US');
+
   List<LanguageList> fList = [
     LanguageList(
-      index: 1,
-      name: "English",
-      translation: 'English',
-    ),
+        index: 1,
+        name: "English",
+        translation: 'English',
+        languageCode: 'en',
+        countryCode: 'US'),
     LanguageList(
-      index: 2,
-      name: "Hindi",
-      translation: 'हिन्दी',
-    ),
+        index: 2,
+        name: "Hindi",
+        translation: 'हिन्दी',
+        languageCode: 'hi',
+        countryCode: 'IN'),
     LanguageList(
-      index: 3,
-      name: "Marathi",
-      translation: 'मराठी',
-    ),
+        index: 3,
+        name: "Marathi",
+        translation: 'मराठी',
+        languageCode: 'mr',
+        countryCode: 'IN'),
     // LanguageList(
     //   index: 4,
     //   name: "Bangla",
@@ -61,30 +74,34 @@ class RadioGroupWidget extends State {
     //   translation: 'ગુજરાતી',
     // ),
     LanguageList(
-      index: 4,
-      name: "Panjabi",
-      translation: 'ਪੰਜਾਬੀ',
-    ),
+        index: 4,
+        name: "Panjabi",
+        translation: 'ਪੰਜਾਬੀ',
+        languageCode: 'pa',
+        countryCode: 'IN'),
     // LanguageList(
     //   index: 7,
     //   name: "Malayalam",
     //   translation: 'മലയാളം',
     // ),
     LanguageList(
-      index: 5,
-      name: "Tamil",
-      translation: 'தமிழ்',
-    ),
+        index: 5,
+        name: "Tamil",
+        translation: 'தமிழ்',
+        languageCode: 'ta',
+        countryCode: 'IN'),
     LanguageList(
-      index: 6,
-      name: "Telugu",
-      translation: 'తెలుగు',
-    ),
+        index: 6,
+        name: "Telugu",
+        translation: 'తెలుగు',
+        languageCode: 'te',
+        countryCode: 'IN'),
     LanguageList(
-      index: 7,
-      name: "Kannada",
-      translation: 'ಕನ್ನಡ',
-    ),
+        index: 7,
+        name: "Kannada",
+        translation: 'ಕನ್ನಡ',
+        languageCode: 'kn',
+        countryCode: 'IN'),
     // LanguageList(
     //   index: 11,
     //   name: "Odia",
@@ -130,6 +147,8 @@ class RadioGroupWidget extends State {
                           setState(() {
                             radioItem = data.name;
                             id = data.index;
+                            locale =
+                                Locale(data.languageCode, data.countryCode);
                           });
                         },
                         child: Container(
@@ -210,6 +229,7 @@ class RadioGroupWidget extends State {
               buttonText: 'Continue',
               width: MediaQuery.of(context).size.width * 0.8,
               onpressed: () {
+                Get.updateLocale(locale);
                 Get.offAll(() => IDragonMain());
               }),
         )
