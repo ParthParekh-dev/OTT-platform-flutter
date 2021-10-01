@@ -25,7 +25,7 @@ class App extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        scaffoldBackgroundColor: Color(0xFF170829),
+        scaffoldBackgroundColor: Colors.black,
       ),
       debugShowCheckedModeBanner: false,
       home: Splash(),

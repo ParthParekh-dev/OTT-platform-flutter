@@ -39,92 +39,119 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: homePageController.categoryList.length + 1,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CarouselSlider(
-                              options: CarouselOptions(
-                                  autoPlay: true,
-                                  enlargeCenterPage: false,
-                                  aspectRatio: 16 / 9,
-                                  onPageChanged: (index, reason) {
-                                    setState(() {
-                                      _current = index;
-                                    });
+                    return Stack(
+                      children: [
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            enlargeStrategy: CenterPageEnlargeStrategy.height,
+                            height: MediaQuery.of(context).size.height * 0.6,
+                            autoPlay: true,
+                            enlargeCenterPage: false,
+                            viewportFraction: 1,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                _current = index;
+                              });
+                            },
+                            initialPage: 0,
+                            enableInfiniteScroll: false,
+                            disableCenter: false,
+                            autoPlayInterval: Duration(seconds: 4),
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 500),
+                            autoPlayCurve: Curves.linear,
+                            scrollDirection: Axis.horizontal,
+                          ),
+                          carouselController: _controller,
+                          items: homePageController.bannerList.map((banner) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => VideoDetailScreen(
+                                        banner.iVideoId.toString()));
                                   },
-                                  initialPage: 0,
-                                  enableInfiniteScroll: false,
-                                  disableCenter: true,
-                                  autoPlayInterval: Duration(seconds: 4),
-                                  autoPlayAnimationDuration:
-                                      Duration(milliseconds: 800),
-                                  autoPlayCurve: Curves.linear,
-                                  scrollDirection: Axis.horizontal,
-                                  height: MediaQuery.of(context).size.height *
-                                      0.45),
-                              carouselController: _controller,
-                              items:
-                                  homePageController.bannerList.map((banner) {
-                                return Builder(
-                                  builder: (BuildContext context) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Get.to(() => VideoDetailScreen(
-                                            banner.iVideoId.toString()));
-                                      },
-                                      child: Container(
+                                  child: Stack(
+                                    children: [
+                                      CachedNetworkImage(
                                         width:
                                             MediaQuery.of(context).size.width,
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 5.0),
-                                        child: CachedNetworkImage(
-                                          imageUrl: banner.bannerUrl,
-                                          fit: BoxFit.contain,
-                                          placeholder: (context, url) => Center(
-                                              child:
-                                                  CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
+                                        imageUrl: banner.bannerUrl,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 35.0),
+                                        child: Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Icon(
+                                                Icons.add_to_photos,
+                                                color: Colors.white,
+                                                size: 50,
+                                              ),
+                                              Icon(
+                                                Icons
+                                                    .play_circle_outline_outlined,
+                                                color: Colors.white,
+                                                size: 50,
+                                              ),
+                                              Icon(
+                                                Icons.share,
+                                                color: Colors.white,
+                                                size: 50,
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    );
-                                  },
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                        ),
+                        Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: homePageController.bannerList
+                                  .asMap()
+                                  .entries
+                                  .map((entry) {
+                                return GestureDetector(
+                                  onTap: () =>
+                                      _controller.animateToPage(entry.key),
+                                  child: Container(
+                                    width: 8.0,
+                                    height: 8.0,
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 2.0),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: (Theme.of(context).brightness ==
+                                                    Brightness.dark
+                                                ? Colors.white
+                                                : Colors.white)
+                                            .withOpacity(_current == entry.key
+                                                ? 0.9
+                                                : 0.4)),
+                                  ),
                                 );
                               }).toList(),
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: homePageController.bannerList
-                                .asMap()
-                                .entries
-                                .map((entry) {
-                              return GestureDetector(
-                                onTap: () =>
-                                    _controller.animateToPage(entry.key),
-                                child: Container(
-                                  width: 8.0,
-                                  height: 8.0,
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 2.0),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: (Theme.of(context).brightness ==
-                                                  Brightness.dark
-                                              ? Colors.white
-                                              : Colors.white)
-                                          .withOpacity(_current == entry.key
-                                              ? 0.9
-                                              : 0.4)),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     );
                   } else {
                     var category = homePageController.categoryList[index - 1];

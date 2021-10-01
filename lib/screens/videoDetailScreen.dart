@@ -84,12 +84,22 @@ class VideoDetailScreen extends StatelessWidget {
                               buttonText: 'Trailer',
                               width: MediaQuery.of(context).size.width * 0.4,
                               onpressed: () {
-                                Get.to(() => VideoPlayer(), arguments: [
-                                  {
-                                    "url": videoDetailController
-                                        .videoDetails.value!.trailerUrl
-                                  },
-                                ]);
+                                if (videoDetailController
+                                        .videoDetails.value!.isFree ==
+                                    "Yes") {
+                                  Get.to(() => VideoPlayer(), arguments: [
+                                    {
+                                      "url": videoDetailController
+                                          .videoDetails.value!.trailerUrl
+                                    },
+                                  ]);
+                                } else if (videoDetailController
+                                        .videoDetails.value!.comingSoon ==
+                                    "Yes") {
+                                  Get.defaultDialog(
+                                      title: 'Coming Soon',
+                                      middleText: 'Stay tuned');
+                                } else {}
                               }),
                           RoundCornerButton(
                               buttonText: 'Play',
