@@ -166,7 +166,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15.0, vertical: 10),
-                                child: Text(category.category),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(category.category),
+                                    Icon(
+                                      Icons.chevron_right,
+                                      color: Colors.white,
+                                    )
+                                  ],
+                                ),
                               ),
                               Expanded(
                                 child: ListView.builder(
@@ -217,7 +227,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15.0, vertical: 10),
-                                child: Text(category.category),
+                                child: GestureDetector(
+                                  onTap: (){
+
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(category.category),
+                                      Icon(
+                                        Icons.chevron_right,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
                               Expanded(
                                 child: ListView.builder(

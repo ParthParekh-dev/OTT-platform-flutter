@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:idragon_pro/localeString.dart';
+import 'package:idragon_pro/screens/googleDummy.dart';
 import 'package:idragon_pro/screens/iDragonMain.dart';
 import 'package:idragon_pro/screens/splashScreen.dart';
 

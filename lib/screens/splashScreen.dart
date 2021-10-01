@@ -22,10 +22,10 @@ class _SplashState extends State<Splash> {
   void navigationPage() {
     final iDragon_data = GetStorage();
 
-    if (iDragon_data.read(Constant().IS_LOGIN) == null) {
-      iDragon_data.write(Constant().IS_LOGIN, false);
+    if (iDragon_data.read(Constant().IS_GOOGLE_LOGIN) == null) {
+      iDragon_data.write(Constant().IS_GOOGLE_LOGIN, false);
     }
-    Get.off(() => iDragon_data.read(Constant().IS_LOGIN)
+    Get.off(() => iDragon_data.read(Constant().IS_GOOGLE_LOGIN)
         ? IDragonMain()
         : GoogleLoginScreen());
   }

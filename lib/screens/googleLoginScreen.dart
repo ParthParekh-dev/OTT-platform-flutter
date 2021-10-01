@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:idragon_pro/constants.dart';
+import 'package:idragon_pro/screens/iDragonMain.dart';
 import 'package:idragon_pro/screens/languageScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerIconButton.dart';
 
 class GoogleLoginScreen extends StatelessWidget {
-  const GoogleLoginScreen({Key? key}) : super(key: key);
+  final iDragon_data = GetStorage();
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +63,22 @@ class GoogleLoginScreen extends StatelessWidget {
                       buttonText: 'Enter',
                       width: MediaQuery.of(context).size.width * 0.4,
                       onpressed: () {
-                        Get.off(() => LanguageScreen());
+                        _googleSignIn.signIn().then((userData) {
+                          print(userData!.displayName! + " " + userData.email);
+
+                          iDragon_data.write(Constant().IS_GOOGLE_LOGIN, true);
+                          iDragon_data.write(Constant().GOOGLE_ID, userData.id);
+                          iDragon_data.write(
+                              Constant().GOOGLE_EMAIL, userData.email);
+                          iDragon_data.write(
+                              Constant().GOOGLE_NAME, userData.displayName);
+                          iDragon_data.write(
+                              Constant().GOOGLE_PROFILE, userData.photoUrl);
+
+                          Get.to(() => IDragonMain());
+                        }).catchError((e) {
+                          print(e);
+                        });
                       },
                       imagePath: 'assets/google.png'),
                 ],

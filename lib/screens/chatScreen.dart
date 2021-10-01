@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:idragon_pro/pageStructure.dart';
+import 'package:idragon_pro/screens/languageScreen.dart';
 
 class ChatScreen extends StatefulWidget {
   ChatScreen({required this.navigatorKey});
@@ -23,7 +25,34 @@ class _ChatScreenState extends State<ChatScreen> {
         mainChild: Container(
           child: Center(
             child: Container(
-              child: Text('Chat Screen'),
+              child: Column(
+                children: [
+                  Text(
+                    'hello'.tr,
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'message'.tr,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'subscribe'.tr,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Get.to(() => LanguageScreen());
+                      },
+                      child: Text('Change')),
+                  Text('Chat Screen'),
+                ],
+              ),
             ),
           ),
         ));

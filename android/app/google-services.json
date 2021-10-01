@@ -1,0 +1,112 @@
+{
+  "project_info": {
+    "project_number": "192323950143",
+    "firebase_url": "https://idragonpro-248ed.firebaseio.com",
+    "project_id": "idragonpro-248ed",
+    "storage_bucket": "idragonpro-248ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192323950143:android:16e87d1fe01b503c1c4a8a",
+        "android_client_info": {
+          "package_name": "com.idragonpro.andmagnus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192323950143-0j9ilfj36mlh3abik82s27r28j3ai9up.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idragonpro.andmagnus",
+            "certificate_hash": "5227c7ed210e5f3e548b97dabc62347496a7cb5b"
+          }
+        },
+        {
+          "client_id": "192323950143-2d1clpi6lfmf11rpvvus71q5fgd0t5n1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idragonpro.andmagnus",
+            "certificate_hash": "b0201cc8930dc449eeecccef625262ce3e6909a6"
+          }
+        },
+        {
+          "client_id": "192323950143-64a4nirakde7ot855e8qcmml53v3vls8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idragonpro.andmagnus",
+            "certificate_hash": "c6d9a194a8e3ec25921bb1ab885c3dfe3bac3e68"
+          }
+        },
+        {
+          "client_id": "192323950143-7naijnjokoeicuur89knhfitek0jdj2k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idragonpro.andmagnus",
+            "certificate_hash": "e79641a0e2d6c897c31b7f12c75f63ce4f808dcf"
+          }
+        },
+        {
+          "client_id": "192323950143-9stpugumc2p5mh1brgv2cmkpq8jp3iue.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idragonpro.andmagnus",
+            "certificate_hash": "29cbb0c5d3343153a2f02bba35960f43a2e52005"
+          }
+        },
+        {
+          "client_id": "192323950143-d28es3jj3vkhevedcisene7j5hkuh8q4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idragonpro.andmagnus",
+            "certificate_hash": "6a16930b7218a707ee95ede2ed8976ce8fe17004"
+          }
+        },
+        {
+          "client_id": "192323950143-edch19r8aq323fe6bqe3834sddnbg84u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idragonpro.andmagnus",
+            "certificate_hash": "a53a3040873c66ca493d908cb7b1116212ea856a"
+          }
+        },
+        {
+          "client_id": "192323950143-i4aut5sr9qr2pd8tghjq7efjsrg2jqsn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idragonpro.andmagnus",
+            "certificate_hash": "f3807c9a980d7a8f2334daecfb8ba518b0cb2a7a"
+          }
+        },
+        {
+          "client_id": "192323950143-jfpieq0dpuuop1lgitdteia2k5f1lv7k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idragonpro.andmagnus",
+            "certificate_hash": "88814fa600ee0944dce5a2dc90292a884c9d7aae"
+          }
+        },
+        {
+          "client_id": "192323950143-l8sg0njc0f1mpc4jje4f5apjnch4oe52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDledtYZRl2UIRoqiHoSs6BEi7zzqM9Gzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192323950143-l8sg0njc0f1mpc4jje4f5apjnch4oe52.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
