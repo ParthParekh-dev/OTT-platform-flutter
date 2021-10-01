@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:idragon_pro/controllers/videoDetailController.dart';
 import 'package:idragon_pro/screens/videoScreen.dart';
-// import 'package:idragon_pro/screens/videoScreen.dart';
+// import 'package:andmagnus/screens/videoScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 
 class VideoDetailScreen extends StatelessWidget {
