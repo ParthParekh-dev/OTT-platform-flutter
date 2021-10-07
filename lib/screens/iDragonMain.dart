@@ -61,19 +61,31 @@ class _IDragonMainState extends State<IDragonMain> {
           ),
         ),
       ),
-      bottomNavigationBar: ConvexAppBar(
+      bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color(0xFFC4C4C4),
-        activeColor: Color(0xFFF70004),
-        color: Colors.black,
-        style: TabStyle.reactCircle,
+        selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.black,
         items: [
-          TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.videocam_rounded, title: 'Video'),
-          TabItem(icon: Icons.search, title: 'Search'),
-          TabItem(icon: Icons.chat, title: 'Chat'),
-          TabItem(icon: Icons.person, title: 'Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.videocam_rounded),
+            label: 'User',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
-        initialActiveIndex: _pageIndex,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        iconSize: 30,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _pageIndex,
         onTap: (int index) {
           setState(
             () {
@@ -85,3 +97,35 @@ class _IDragonMainState extends State<IDragonMain> {
     );
   }
 }
+
+//bottomNavigationBar: BottomNavigationBar(
+//         backgroundColor: Color(0xFFC4C4C4),
+//         items: [
+//           BottomNavigationBarItem(
+//               icon: Icon(Icons.home),
+//               label: 'Home',
+//               backgroundColor: Colors.teal),
+//           BottomNavigationBarItem(
+//               icon: Icon(Icons.person),
+//               label: 'Profile',
+//               backgroundColor: Colors.cyan),
+//           BottomNavigationBarItem(
+//             icon: Icon(Icons.settings),
+//             label: 'Settings',
+//             backgroundColor: Colors.lightBlue,
+//           ),
+//         ],
+//         type: BottomNavigationBarType.shifting,
+//         currentIndex: _pageIndex,
+//         selectedItemColor: Colors.white,
+//         unselectedItemColor: Colors.grey,
+//         iconSize: 40,
+//         onTap: (int index) {
+//           setState(
+//             () {
+//               print(index);
+//               _pageIndex = index;
+//             },
+//           );
+//         },
+//       ),
