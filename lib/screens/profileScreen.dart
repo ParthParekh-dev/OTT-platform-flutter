@@ -5,7 +5,9 @@ import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/pageStructure.dart';
 import 'package:get/get.dart';
 import 'package:idragon_pro/screens/googleLoginScreen.dart';
+import 'package:idragon_pro/screens/iDragonMain.dart';
 import 'package:idragon_pro/screens/languageScreen.dart';
+import 'package:idragon_pro/widgets/roundCornerButton.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({required this.navigatorKey});
@@ -37,17 +39,83 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Center(
           child: Column(
             children: [
-              Text(iDragon_data.read(Constant().GOOGLE_NAME)),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: IconButton(
+                        onPressed: () {
+                          Get.to(() => IDragonMain());
+                        },
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                    Image.asset('assets/logo.png'),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: IconButton(
+                        onPressed: () {
+                          Get.to(() => IDragonMain());
+                        },
+                        icon: Icon(
+                          Icons.settings,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipOval(
+                  child: Image.network(
+                    iDragon_data.read(Constant().GOOGLE_PROFILE),
+                    width: 180,
+                    height: 180,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  iDragon_data.read(Constant().GOOGLE_NAME),
+                  style: TextStyle(fontSize: 25),
+                ),
+              ),
               Text(iDragon_data.read(Constant().GOOGLE_EMAIL)),
-              Image.network(iDragon_data.read(Constant().GOOGLE_PROFILE)),
-              ElevatedButton(
-                  onPressed: () {
-                    _googleSignIn.signOut().then((value) {
-                      iDragon_data.write(Constant().IS_GOOGLE_LOGIN, false);
-                      Get.offAll(() => GoogleLoginScreen());
-                    }).catchError((e) {});
-                  },
-                  child: Text('Log Out'))
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 40.0),
+                child: RoundCornerButton(
+                    buttonText: 'Log out',
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    onpressed: () {
+                      Get.defaultDialog(
+                          title: 'Are you sure you want to log out?',
+                          middleText: '',
+                          textConfirm: 'Yes',
+                          textCancel: 'No',
+                          onCancel: () {
+                            Get.back();
+                          },
+                          onConfirm: () {
+                            _googleSignIn.signOut().then((value) {
+                              iDragon_data.write(
+                                  Constant().IS_GOOGLE_LOGIN, false);
+                              Get.offAll(() => GoogleLoginScreen());
+                            }).catchError((e) {});
+                          });
+                    }),
+              )
             ],
           ),
         ),

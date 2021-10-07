@@ -3,9 +3,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/homePageController.dart';
 import 'package:idragon_pro/models/homePageResponse.dart';
 import 'package:idragon_pro/pageStructure.dart';
+import 'package:idragon_pro/screens/showCategoryScreen.dart';
 import 'package:idragon_pro/screens/videoDetailScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -85,17 +88,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(bottom: 35.0),
+                                            const EdgeInsets.only(bottom: 55.0),
                                         child: Align(
                                           alignment: Alignment.bottomCenter,
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Icon(
-                                                Icons.add_to_photos,
-                                                color: Colors.white,
-                                                size: 50,
+                                              GestureDetector(
+                                                onTap: () {
+                                                  homePageController
+                                                      .addToWatchlist(
+                                                          GetStorage().read(
+                                                              Constant()
+                                                                  .USER_ID),
+                                                          banner.iVideoId
+                                                              .toString());
+                                                },
+                                                child: Icon(
+                                                  Icons.add_to_photos,
+                                                  color: Colors.white,
+                                                  size: 50,
+                                                ),
                                               ),
                                               Icon(
                                                 Icons
@@ -122,32 +136,44 @@ class _HomeScreenState extends State<HomeScreen> {
                         Positioned.fill(
                           child: Align(
                             alignment: Alignment.bottomCenter,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: homePageController.bannerList
-                                  .asMap()
-                                  .entries
-                                  .map((entry) {
-                                return GestureDetector(
-                                  onTap: () =>
-                                      _controller.animateToPage(entry.key),
-                                  child: Container(
-                                    width: 8.0,
-                                    height: 8.0,
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 8.0, horizontal: 2.0),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: (Theme.of(context).brightness ==
-                                                    Brightness.dark
-                                                ? Colors.white
-                                                : Colors.white)
-                                            .withOpacity(_current == entry.key
-                                                ? 0.9
-                                                : 0.4)),
-                                  ),
-                                );
-                              }).toList(),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                      spreadRadius: 35.0,
+                                      color: Colors.black,
+                                      blurRadius: 40.0,
+                                      offset: Offset(0, 0.75))
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: homePageController.bannerList
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
+                                  return GestureDetector(
+                                    onTap: () =>
+                                        _controller.animateToPage(entry.key),
+                                    child: Container(
+                                      width: 8.0,
+                                      height: 8.0,
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 8.0, horizontal: 2.0),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: (Theme.of(context)
+                                                          .brightness ==
+                                                      Brightness.dark
+                                                  ? Colors.white
+                                                  : Colors.white)
+                                              .withOpacity(_current == entry.key
+                                                  ? 0.9
+                                                  : 0.4)),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                           ),
                         ),
@@ -166,16 +192,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15.0, vertical: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(category.category),
-                                    Icon(
-                                      Icons.chevron_right,
-                                      color: Colors.white,
-                                    )
-                                  ],
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.to(() =>
+                                        ShowCategoryScreen(category: category));
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(category.category),
+                                      Icon(
+                                        Icons.chevron_right,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -228,8 +260,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15.0, vertical: 10),
                                 child: GestureDetector(
-                                  onTap: (){
-
+                                  onTap: () {
+                                    Get.to(() =>
+                                        ShowCategoryScreen(category: category));
                                   },
                                   child: Row(
                                     mainAxisAlignment:

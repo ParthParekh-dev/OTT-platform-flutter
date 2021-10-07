@@ -33,29 +33,32 @@ class _SearchScreenState extends State<SearchScreen> {
                 height: MediaQuery.of(context).size.height * 0.07,
                 child: Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: IconButton(
-                        onPressed: () {
-                          Get.to(() => IDragonMain());
-                        },
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    //   child: IconButton(
+                    //     onPressed: () {
+                    //       Get.to(() => IDragonMain());
+                    //     },
+                    //     icon: Icon(
+                    //       Icons.arrow_back,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    // ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: TextField(
+                          key: Key('100'),
                           autofocus: true,
-                          style: TextStyle(fontSize: 25, color: Colors.white),
+                          style: TextStyle(fontSize: 20, color: Colors.white),
                           onChanged: (value) {
                             searchController.fetchSearchResponse(value);
                             print(value);
                           },
                           decoration: InputDecoration(
+                            hintText: 'Search here',
+                            hintStyle: TextStyle(color: Color(0xFFB4B4FF)),
                             prefixIcon: Icon(
                               Icons.search,
                               color: Colors.white,

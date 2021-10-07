@@ -2,7 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/videoDetailController.dart';
+import 'package:idragon_pro/screens/mobileLoginScreen.dart';
 import 'package:idragon_pro/screens/videoScreen.dart';
 // import 'package:andmagnus/screens/videoScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
@@ -48,12 +51,29 @@ class VideoDetailScreen extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: CircleAvatar(
+                                backgroundColor: Colors.black,
                                 child: IconButton(
                                   icon: Icon(Icons.arrow_back),
                                   onPressed: () {
                                     Get.back();
                                   },
                                 ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            child: Container(
+                              height: 20,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                      spreadRadius: 50.0,
+                                      color: Colors.black,
+                                      blurRadius: 80.0,
+                                      offset: Offset(0.75, 0))
+                                ],
                               ),
                             ),
                           ),
@@ -67,7 +87,7 @@ class VideoDetailScreen extends StatelessWidget {
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                       Padding(
@@ -84,33 +104,35 @@ class VideoDetailScreen extends StatelessWidget {
                               buttonText: 'Trailer',
                               width: MediaQuery.of(context).size.width * 0.4,
                               onpressed: () {
-                                if (videoDetailController
-                                        .videoDetails.value!.isFree ==
-                                    "Yes") {
-                                  Get.to(() => VideoPlayer(), arguments: [
-                                    {
-                                      "url": videoDetailController
-                                          .videoDetails.value!.trailerUrl
-                                    },
-                                  ]);
-                                } else if (videoDetailController
-                                        .videoDetails.value!.comingSoon ==
-                                    "Yes") {
-                                  Get.defaultDialog(
-                                      title: 'Coming Soon',
-                                      middleText: 'Stay tuned');
-                                } else {}
+                                Get.to(() => VideoPlayer(), arguments: [
+                                  {
+                                    "url": videoDetailController
+                                        .videoDetails.value!.trailerUrl
+                                  }
+                                ]);
                               }),
                           RoundCornerButton(
                               buttonText: 'Play',
                               width: MediaQuery.of(context).size.width * 0.4,
                               onpressed: () {
-                                Get.to(() => VideoPlayer(), arguments: [
-                                  {
-                                    "url": videoDetailController
-                                        .videoDetails.value!.videoUrl
-                                  },
-                                ]);
+                                if (videoDetailController
+                                        .videoDetails.value!.comingSoon ==
+                                    "Yes") {
+                                  Get.defaultDialog(
+                                      title: 'Coming Soon',
+                                      middleText: 'Stay tuned');
+                                } else if (videoDetailController
+                                        .videoDetails.value!.isFree ==
+                                    "Yes") {
+                                  Get.to(() => VideoPlayer(), arguments: [
+                                    {
+                                      "url": videoDetailController
+                                          .videoDetails.value!.videoUrl
+                                    },
+                                  ]);
+                                } else {
+                                  Get.to(() => MobileLoginScreen());
+                                }
                               })
                         ],
                       ),
@@ -119,10 +141,22 @@ class VideoDetailScreen extends StatelessWidget {
                         children: [
                           Column(
                             children: [
-                              Icon(
-                                Icons.add_to_photos_rounded,
-                                color: Colors.white,
-                                size: 30,
+                              GestureDetector(
+                                onTap: () {
+                                  videoDetailController.addToWatchlist(
+                                      GetStorage().read(Constant().USER_ID),
+                                      videoDetailController
+                                          .videoDetails.value!.id
+                                          .toString());
+                                },
+                                child: (videoDetailController
+                                        .addingToWatchList.value)
+                                    ? (CircularProgressIndicator())
+                                    : Icon(
+                                        Icons.add_to_photos_rounded,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
                               ),
                               Text(
                                 'Watch List',
