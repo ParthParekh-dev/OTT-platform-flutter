@@ -1,76 +1,127 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:idragon_pro/constants.dart';
+import 'package:idragon_pro/controllers/loginController.dart';
+import 'package:idragon_pro/screens/homeScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 
-import 'iDragonMain.dart';
+class MobileLoginScreen extends StatefulWidget {
+  @override
+  _MobileLoginScreenState createState() => _MobileLoginScreenState();
+}
 
-class MobileLoginScreen extends StatelessWidget {
-  const MobileLoginScreen({Key? key}) : super(key: key);
+class _MobileLoginScreenState extends State<MobileLoginScreen> {
+  final iDragon_data = GetStorage();
+  final LoginController loginController = Get.put(LoginController());
+  final myController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      body: Container(
-        child: Center(
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 15.0),
+                            child: IconButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                                size: 40,
+                              ),
+                            ),
+                          ),
+                          Image.asset('assets/logo.png'),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 15.0),
+                            child: Icon(
+                              Icons.settings,
+                              color: Colors.black,
+                              size: 40,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: IconButton(
-                        onPressed: () {
-                          Get.to(() => IDragonMain());
-                        },
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                          size: 40,
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        'LOGIN',
+                        style: TextStyle(
+                            color: Color(0xFFFFC737),
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 8),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Enter Mobile Number',
+                          textAlign: TextAlign.start,
                         ),
                       ),
                     ),
-                    Image.asset('assets/logo.png'),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: IconButton(
-                        onPressed: () {
-                          Get.to(() => IDragonMain());
+                      child: TextField(
+                        controller: myController,
+                        onChanged: (value) {
+                          print(myController.text);
                         },
-                        icon: Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                          size: 40,
+                        maxLength: 10,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Enter phone number',
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 40.0),
+                      child: RoundCornerButton(
+                          buttonText: 'Log in',
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          onpressed: () {
+                            String id = iDragon_data.read(Constant().USER_ID);
+                            String name =
+                                iDragon_data.read(Constant().GOOGLE_NAME);
+                            String email =
+                                iDragon_data.read(Constant().GOOGLE_EMAIL);
+                            loginController.mobileLogin(
+                                id, myController.text, name, email);
+                          }),
+                    ),
+                    Obx(() => (loginController.isLoading.value)
+                        ? Center(child: (CircularProgressIndicator()))
+                        : Container()),
                   ],
                 ),
               ),
-              Text('LOGIN'),
-              Text(
-                'Enter Mobile Number',
-                textAlign: TextAlign.left,
-              ),
-              TextField(),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40.0),
-                child: RoundCornerButton(
-                    buttonText: 'Log in',
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    onpressed: () {
-                      Get.snackbar('Please wait', 'Coding in progress!',
-                          backgroundColor: Colors.white,
-                          colorText: Colors.black);
-                    }),
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    ));
+    );
   }
 }

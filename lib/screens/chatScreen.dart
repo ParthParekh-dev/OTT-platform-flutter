@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idragon_pro/pageStructure.dart';
+
 import 'package:idragon_pro/screens/languageScreen.dart';
 
 class ChatScreen extends StatefulWidget {
-  ChatScreen({required this.navigatorKey});
-
-  final GlobalKey? navigatorKey;
-
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -20,9 +16,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return IDragonPageStructure(
-        navigatorKey: widget.navigatorKey,
-        mainChild: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
           child: Center(
             child: Container(
               child: Column(
@@ -55,6 +51,8 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

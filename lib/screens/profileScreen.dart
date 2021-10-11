@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:idragon_pro/constants.dart';
-import 'package:idragon_pro/pageStructure.dart';
+
 import 'package:get/get.dart';
 import 'package:idragon_pro/screens/googleLoginScreen.dart';
-import 'package:idragon_pro/screens/iDragonMain.dart';
+import 'package:idragon_pro/screens/homeScreen.dart';
+
 import 'package:idragon_pro/screens/languageScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
+import 'package:idragon_pro/widgets/roundCornerIconButton.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({required this.navigatorKey});
-
-  final GlobalKey? navigatorKey;
-
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -33,90 +32,121 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return IDragonPageStructure(
-      navigatorKey: widget.navigatorKey,
-      mainChild: Container(
-        child: Center(
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: IconButton(
-                        onPressed: () {
-                          Get.to(() => IDragonMain());
-                        },
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                          size: 40,
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          child: Center(
+            child: Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: IconButton(
+                          onPressed: () {
+                            Get.to(() => HomeScreen());
+                          },
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 40,
+                          ),
                         ),
                       ),
-                    ),
-                    Image.asset('assets/logo.png'),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: IconButton(
-                        onPressed: () {
-                          Get.to(() => IDragonMain());
-                        },
-                        icon: Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                          size: 40,
+                      Image.asset('assets/logo.png'),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: IconButton(
+                          onPressed: () {
+                            Get.to(() => HomeScreen());
+                          },
+                          icon: Icon(
+                            Icons.settings,
+                            color: Colors.white,
+                            size: 40,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipOval(
-                  child: Image.network(
-                    iDragon_data.read(Constant().GOOGLE_PROFILE),
-                    width: 180,
-                    height: 180,
-                    fit: BoxFit.cover,
+                    ],
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  iDragon_data.read(Constant().GOOGLE_NAME),
-                  style: TextStyle(fontSize: 25),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipOval(
+                    child: Image.network(
+                      iDragon_data.read(Constant().GOOGLE_PROFILE),
+                      width: 180,
+                      height: 180,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
-              Text(iDragon_data.read(Constant().GOOGLE_EMAIL)),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40.0),
-                child: RoundCornerButton(
-                    buttonText: 'Log out',
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    iDragon_data.read(Constant().GOOGLE_NAME),
+                    style: TextStyle(fontSize: 25),
+                  ),
+                ),
+                RoundCornerIconButton(
+                    buttonText: 'Edit',
                     width: MediaQuery.of(context).size.width * 0.3,
-                    onpressed: () {
-                      Get.defaultDialog(
-                          title: 'Are you sure you want to log out?',
-                          middleText: '',
-                          textConfirm: 'Yes',
-                          textCancel: 'No',
-                          onCancel: () {
-                            Get.back();
-                          },
-                          onConfirm: () {
-                            _googleSignIn.signOut().then((value) {
-                              iDragon_data.write(
-                                  Constant().IS_GOOGLE_LOGIN, false);
-                              Get.offAll(() => GoogleLoginScreen());
-                            }).catchError((e) {});
-                          });
-                    }),
-              )
-            ],
+                    onpressed: () {},
+                    imagePath: 'assets/editIcon.png'),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/login_rect.png"),
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image.asset(
+                            'assets/vipLogo.png',
+                            width: 100,
+                          ),
+                          Text(
+                            'Click here to VIP login',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ]),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40.0),
+                  child: RoundCornerButton(
+                      buttonText: 'Log out',
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      onpressed: () {
+                        Get.defaultDialog(
+                            title: 'Are you sure you want to log out?',
+                            middleText: '',
+                            textConfirm: 'Yes',
+                            textCancel: 'No',
+                            onCancel: () {
+                              Get.back();
+                            },
+                            onConfirm: () {
+                              _googleSignIn.signOut().then((value) {
+                                iDragon_data.write(
+                                    Constant().IS_GOOGLE_LOGIN, false);
+                                Get.offAll(() => GoogleLoginScreen());
+                              }).catchError((e) {});
+                            });
+                      }),
+                )
+              ],
+            ),
           ),
         ),
       ),

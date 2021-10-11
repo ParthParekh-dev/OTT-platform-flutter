@@ -7,6 +7,7 @@ class VideoDetailController extends GetxController {
   var videoDetails = Rxn<Video>();
   var isLoading = true.obs;
   var addingToWatchList = false.obs;
+  var videoPlayerReady = false.obs;
 
   @override
   void onInit() {

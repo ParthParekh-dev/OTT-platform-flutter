@@ -1,16 +1,60 @@
+import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/promoController.dart';
-import 'package:idragon_pro/screens/iDragonMain.dart';
-import 'package:idragon_pro/widgets/roundCornerButton.dart';
-import 'package:idragon_pro/widgets/videoItems.dart';
-// import 'package:video_player/video_player.dart';
+import 'package:idragon_pro/screens/googleLoginScreen.dart';
+import 'package:idragon_pro/screens/homeScreen.dart';
 
-class PromoScreen extends StatelessWidget {
-  final PromoController promoController = Get.put(PromoController());
+import 'package:idragon_pro/widgets/roundCornerButton.dart';
+
+class PromoScreen extends StatefulWidget {
+  @override
+  _PromoScreenState createState() => _PromoScreenState();
+}
+
+class _PromoScreenState extends State<PromoScreen> {
+  final PromoController promoController = Get.find();
+
+  late BetterPlayerController _betterPlayerController;
 
   @override
   Widget build(BuildContext context) {
+    promoController.videoPlayerReady.value = false;
+    BetterPlayerControlsConfiguration controlsConfiguration =
+        BetterPlayerControlsConfiguration(
+      showControls: false,
+      enableFullscreen: false,
+      enablePlayPause: false,
+      showControlsOnInitialize: false,
+      loadingColor: Colors.red,
+    );
+
+    BetterPlayerConfiguration betterPlayerConfiguration =
+        BetterPlayerConfiguration(
+            autoPlay: true,
+            fullScreenByDefault: false,
+            deviceOrientationsOnFullScreen: [DeviceOrientation.portraitUp],
+            deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
+            controlsConfiguration: controlsConfiguration,
+            aspectRatio: 9 / 16,
+            fullScreenAspectRatio: 9 / 16,
+            allowedScreenSleep: false,
+            fit: BoxFit.contain);
+
+    BetterPlayerDataSource dataSource = BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      promoController.promoDetails.value!.flashVideoUrl,
+    );
+
+    _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
+    _betterPlayerController.setupDataSource(dataSource);
+    promoController.videoPlayerReady.value = true;
+
+    promoController.startTimer();
+
     return SafeArea(
       child: Scaffold(
         body: Obx(() => Container(
@@ -19,16 +63,9 @@ class PromoScreen extends StatelessWidget {
                   ? Center(child: (CircularProgressIndicator()))
                   : Stack(
                       children: [
-                        // VideoItems(
-                        //   videoPlayerController: VideoPlayerController.network(
-                        //       promoController
-                        //           .promoDetails.value!.flashVideoUrl),
-                        //   looping: false,
-                        //   autoplay: true,
-                        //   showControls: false,
-                        //   fullScreenDefault: false,
-                        //   aspectRatio: 9 / 16,
-                        // ),
+                        BetterPlayer(
+                          controller: _betterPlayerController,
+                        ),
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Padding(
@@ -40,7 +77,10 @@ class PromoScreen extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 onpressed: () {
                                   if (promoController.isTimerOver.value) {
-                                    Get.to(() => IDragonMain());
+                                    Get.off(() => GetStorage()
+                                            .read(Constant().IS_GOOGLE_LOGIN)
+                                        ? HomeScreen()
+                                        : GoogleLoginScreen());
                                   } else {
                                     null;
                                   }

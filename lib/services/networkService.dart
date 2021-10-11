@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:idragon_pro/models/addToWatchlistRespose.dart';
 import 'package:idragon_pro/models/googleLoginResponse.dart';
 import 'package:idragon_pro/models/homePageResponse.dart';
+import 'package:idragon_pro/models/mobileLoginResponse.dart';
 import 'package:idragon_pro/models/promoResponse.dart';
 import 'package:idragon_pro/models/searchResponse.dart';
 import 'package:idragon_pro/models/videoDetailResponse.dart';
@@ -102,6 +103,35 @@ class NetworkService {
       var jsonString = response.body;
 
       return addtoWatchlistResponseFromJson(jsonString);
+    } else {
+      //show error
+      return null;
+    }
+  }
+
+  Future<MobileLoginResponse?> mobileLogin(
+      String id, String mobile, String fname, String email) async {
+    var name = fname.split(' ');
+
+    if (name.length == 1) {
+      name.add(' ');
+    }
+
+    http.Response response = await http.post(
+      Uri.encodeFull(
+          'https://idragonpro.com/idragon/api/v.08.2021/updatemobile?id=$id&mobileno=$mobile&role_id=2&name=${name[0]}&lastname=${name[1]}&email=$email&versionCode=33'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var jsonString = response.body;
+
+      return mobileLoginResponseFromJson(jsonString);
     } else {
       //show error
       return null;

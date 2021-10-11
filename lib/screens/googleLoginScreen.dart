@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/loginController.dart';
-import 'package:idragon_pro/screens/iDragonMain.dart';
+
 import 'package:idragon_pro/screens/languageScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerIconButton.dart';
 
@@ -22,7 +22,7 @@ class GoogleLoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Obx(() => (!loginController.isLoading.value)
+        body: Obx(() => (loginController.isLoading.value)
             ? Container(child: Center(child: (CircularProgressIndicator())))
             : Column(
                 children: [

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:idragon_pro/models/promoResponse.dart';
+import 'package:idragon_pro/screens/promoScreen.dart';
 import 'package:idragon_pro/services/networkService.dart';
 
 class PromoController extends GetxController {
@@ -11,6 +12,7 @@ class PromoController extends GetxController {
   var _start = 0;
   var coundDown = Rxn<int>();
   var isTimerOver = false.obs;
+  var videoPlayerReady = false.obs;
 
   @override
   void onInit() {
@@ -41,11 +43,14 @@ class PromoController extends GetxController {
 
       if (result != null) {
         promoDetails.value = result.promoflash;
+
+        print('=+++++++++++++++++' + promoDetails.value!.flashVideoUrl);
+
         _start = int.parse(result.promoflash.flashTime) + 3;
       }
     } finally {
       isTimerOver(false);
-      startTimer();
+
       isLoading(false);
     }
   }

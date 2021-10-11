@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idragon_pro/screens/iDragonMain.dart';
+import 'package:idragon_pro/screens/homeScreen.dart';
+
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 
 class LanguageScreen extends StatelessWidget {
@@ -230,7 +231,7 @@ class RadioGroupWidget extends State {
               width: MediaQuery.of(context).size.width * 0.8,
               onpressed: () {
                 Get.updateLocale(locale);
-                Get.offAll(() => IDragonMain());
+                Get.offAll(() => HomeScreen());
               }),
         )
       ],

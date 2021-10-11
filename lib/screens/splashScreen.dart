@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:idragon_pro/constants.dart';
+import 'package:idragon_pro/controllers/promoController.dart';
 import 'package:idragon_pro/screens/googleLoginScreen.dart';
-
-import 'iDragonMain.dart';
+import 'package:idragon_pro/screens/homeScreen.dart';
+import 'package:idragon_pro/screens/promoScreen.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  final PromoController promoController = Get.put(PromoController());
+
   startTime() async {
     var _duration = new Duration(seconds: 3);
     return new Timer(_duration, navigationPage);
@@ -25,9 +28,7 @@ class _SplashState extends State<Splash> {
     if (iDragon_data.read(Constant().IS_GOOGLE_LOGIN) == null) {
       iDragon_data.write(Constant().IS_GOOGLE_LOGIN, false);
     }
-    Get.off(() => iDragon_data.read(Constant().IS_GOOGLE_LOGIN)
-        ? IDragonMain()
-        : GoogleLoginScreen());
+    Get.off(() => PromoScreen());
   }
 
   @override
