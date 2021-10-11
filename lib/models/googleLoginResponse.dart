@@ -59,22 +59,22 @@ class User {
   String mobileno;
   String age;
   String email;
-  String sGender;
-  DateTime sNoti;
+  String? sGender;
+  String? sNoti;
   dynamic subscription;
   dynamic remdays;
   dynamic videoid;
   dynamic subscriptionweb;
   dynamic remdaysweb;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
   int roleId;
   String deviceId1;
   dynamic deviceId2;
   String firebaseId1;
   dynamic firebaseId2;
-  String profilePic;
-  String isNotificationActive;
+  String? profilePic;
+  String? isNotificationActive;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -84,7 +84,7 @@ class User {
         age: json["age"],
         email: json["email"],
         sGender: json["sGender"],
-        sNoti: DateTime.parse(json["sNoti"]),
+        sNoti: json["sNoti"].toString(),
         subscription: json["subscription"],
         remdays: json["remdays"],
         videoid: json["videoid"],
