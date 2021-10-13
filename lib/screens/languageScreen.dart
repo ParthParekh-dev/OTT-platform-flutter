@@ -194,24 +194,28 @@ class RadioGroupWidget extends State {
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Radio(
-                                          fillColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Colors.white),
-                                          hoverColor: Colors.white,
-                                          groupValue: id,
-                                          value: data.index,
-                                          onChanged: (val) {},
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Radio(
+                                            fillColor:
+                                                MaterialStateColor.resolveWith(
+                                                    (states) => Colors.white),
+                                            hoverColor: Colors.white,
+                                            groupValue: id,
+                                            value: data.index,
+                                            onChanged: (val) {},
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 0.0, horizontal: 15.0),
-                                    child: Text(data.translation),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 0.0, horizontal: 15.0),
+                                      child: Text(data.translation),
+                                    ),
                                   ),
                                 ],
                               )
