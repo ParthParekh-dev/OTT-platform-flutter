@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: IconButton(
                           onPressed: () {
-                            Get.to(() => HomeScreen());
+                            Get.back();
                           },
                           icon: Icon(
                             Icons.arrow_back,

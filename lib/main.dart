@@ -10,10 +10,10 @@ import 'package:idragon_pro/screens/splashScreen.dart';
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setPreferredOrientations(
-  //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
-  runApp(new App());
-  // });
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
+    runApp(new App());
+  });
 }
 
 class App extends StatelessWidget {
