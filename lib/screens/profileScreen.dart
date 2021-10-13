@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:idragon_pro/constants.dart';
@@ -7,8 +6,6 @@ import 'package:idragon_pro/constants.dart';
 import 'package:get/get.dart';
 import 'package:idragon_pro/screens/googleLoginScreen.dart';
 import 'package:idragon_pro/screens/homeScreen.dart';
-
-import 'package:idragon_pro/screens/languageScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:idragon_pro/widgets/roundCornerIconButton.dart';
 

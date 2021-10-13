@@ -41,6 +41,8 @@ class PromoController extends GetxController {
     try {
       var result = await NetworkService().fetchPromoVideo();
 
+      print(result);
+
       if (result != null) {
         promoDetails.value = result.promoflash;
 

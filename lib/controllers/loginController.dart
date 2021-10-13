@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/screens/homeScreen.dart';
+import 'package:idragon_pro/screens/languageScreen.dart';
 import 'package:idragon_pro/screens/subscriptionScreen.dart';
 
 import 'package:idragon_pro/services/networkService.dart';
@@ -29,7 +30,7 @@ class LoginController extends GetxController {
         iDragon_data.write(
             Constant().FIREBASE_ID, result.user.firebaseId1.toString());
 
-        Get.offAll(() => HomeScreen());
+        Get.offAll(() => LanguageScreen());
       }
     } finally {
       isLoading(false);

@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/promoController.dart';
-import 'package:idragon_pro/screens/googleLoginScreen.dart';
-import 'package:idragon_pro/screens/homeScreen.dart';
 import 'package:idragon_pro/screens/promoScreen.dart';
 
 class Splash extends StatefulWidget {

@@ -170,8 +170,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onTap: () => _controller
                                               .animateToPage(entry.key),
                                           child: Container(
-                                            width: 8.0,
-                                            height: 8.0,
+                                            width: 6.0,
+                                            height: 6.0,
                                             margin: EdgeInsets.symmetric(
                                                 vertical: 8.0, horizontal: 2.0),
                                             decoration: BoxDecoration(

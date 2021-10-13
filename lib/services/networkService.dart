@@ -37,8 +37,11 @@ class NetworkService {
       },
     );
 
+    print(response.statusCode);
+
     if (response.statusCode == 201 || response.statusCode == 200) {
       var jsonString = response.body;
+      print('Promo ============' + jsonString);
       return promoResponseFromJson(jsonString);
     } else {
       //show error
