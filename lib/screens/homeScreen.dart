@@ -170,8 +170,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onTap: () => _controller
                                               .animateToPage(entry.key),
                                           child: Container(
-                                            width: 6.0,
-                                            height: 6.0,
+                                            width: 5.0,
+                                            height: 5.0,
                                             margin: EdgeInsets.symmetric(
                                                 vertical: 8.0, horizontal: 2.0),
                                             decoration: BoxDecoration(
@@ -218,7 +218,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(category.category),
+                                            Expanded(
+                                                child: Text(category.category)),
                                             Icon(
                                               Icons.chevron_right,
                                               color: Colors.white,
