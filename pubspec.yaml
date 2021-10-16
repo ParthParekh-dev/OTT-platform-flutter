@@ -33,10 +33,11 @@ dependencies:
   get_storage: any
   carousel_slider: ^4.0.0
   cached_network_image: any
-  better_player: any
   google_sign_in: ^5.1.0
   flutter_sim_country_code: ^0.1.1
   connectivity: ^3.0.6
+  better_player:
+    path: betterplayer-master
 
 dev_dependencies:
   flutter_test:
