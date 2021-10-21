@@ -45,7 +45,7 @@ class _BetterPlayerMaterialControlsState
   Timer? _showAfterExpandCollapseTimer;
   bool _displayTapped = false;
   bool _wasLoading = false;
-  double _value = 0.0;
+  double _brightnessValue = 0.0;
   VideoPlayerController? _controller;
   BetterPlayerController? _betterPlayerController;
   StreamSubscription? _controlsVisibilityStreamSubscription;
@@ -73,9 +73,10 @@ class _BetterPlayerMaterialControlsState
     _wasLoading = isLoading(_latestValue);
     _betterPlayerController!.currentBrightness.then((double brightness) {
       setState(() {
-        _value = brightness;
+        _brightnessValue = brightness;
       });
     });
+
     if (_latestValue?.hasError == true) {
       return Container(
         color: Colors.black,
@@ -197,38 +198,91 @@ class _BetterPlayerMaterialControlsState
     }
   }
 
-  Widget _buildSliders() {
+  Widget _buildBrightnessSlider() {
     if (!betterPlayerController!.controlsEnabled) {
       return const SizedBox();
     }
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15.0),
-      child: Column(
-        children: [
-          Center(
-            child: AnimatedOpacity(
-              opacity: _hideStuff ? 0.0 : 1.0,
-              duration: _controlsConfiguration.controlsHideTime,
+    return Column(
+      children: [
+        Center(
+          child: AnimatedOpacity(
+            opacity: _hideStuff ? 0.0 : 1.0,
+            duration: _controlsConfiguration.controlsHideTime,
+            child: SizedBox(
+              height: 150,
+              child: RotatedBox(
+                  quarterTurns: 3,
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      thumbColor: Colors.white,
+                      activeTrackColor: Colors.white,
+                      trackHeight: 1.0,
+                      thumbShape:
+                          RoundSliderThumbShape(enabledThumbRadius: 5.0),
+                    ),
+                    child: Slider(
+                      min: 0.0,
+                      max: 1.0,
+                      value: _brightnessValue,
+                      onChanged: (value) {
+                        setState(() {
+                          if (value > 0.01) {
+                            _brightnessValue = value;
+                          }
+                        });
+                        _betterPlayerController!
+                            .setBrightness(_brightnessValue);
+                      },
+                    ),
+                  )),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVolumeSlider() {
+    if (!betterPlayerController!.controlsEnabled) {
+      return const SizedBox();
+    }
+    return Column(
+      children: [
+        Center(
+          child: AnimatedOpacity(
+            opacity: _hideStuff ? 0.0 : 1.0,
+            duration: _controlsConfiguration.controlsHideTime,
+            child: SizedBox(
+              height: 150,
               child: RotatedBox(
                 quarterTurns: 3,
-                child: Slider(
-                  min: 0.0,
-                  max: 1.0,
-                  value: _value,
-                  onChanged: (value) {
-                    setState(() {
-                      if (value > 0.01) {
-                        _value = value;
-                      }
-                    });
-                    _betterPlayerController!.setBrightness(_value);
-                  },
+                child: SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    thumbColor: Colors.white,
+                    activeTrackColor: Colors.white,
+                    trackHeight: 1.0,
+                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5.0),
+                  ),
+                  child: Slider(
+                    min: 0.0,
+                    max: 1.0,
+                    value: latestValue!.volume.toDouble(),
+                    onChanged: (value) {
+                      setState(() {
+                        if (value > 0.01) {
+                          _latestVolume = value;
+                        }
+                      });
+                      _betterPlayerController!
+                          .setVolume(_latestVolume!.toDouble());
+                    },
+                  ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -248,8 +302,9 @@ class _BetterPlayerMaterialControlsState
                   height: _controlsConfiguration.controlBarHeight,
                   width: double.infinity,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      _buildBackPress(),
                       if (_controlsConfiguration.enablePip)
                         _buildPipButtonWrapperWidget(_hideStuff, _onPlayerHide)
                       else
@@ -312,10 +367,27 @@ class _BetterPlayerMaterialControlsState
       onTap: () {
         onShowMoreClicked();
       },
-      child: Padding(
-        padding: const EdgeInsets.all(8),
+      child: Container(
+        margin: const EdgeInsets.only(right: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Icon(
           _controlsConfiguration.overflowMenuIcon,
+          color: _controlsConfiguration.iconsColor,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBackPress() {
+    return BetterPlayerMaterialClickableWidget(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(left: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Icon(
+          Icons.arrow_back,
           color: _controlsConfiguration.iconsColor,
         ),
       ),
@@ -432,7 +504,12 @@ class _BetterPlayerMaterialControlsState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // _buildSliders(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildBrightnessSlider(),
+                  ],
+                ),
                 if (_controlsConfiguration.enableSkips)
                   _buildSkipButton()
                 else
@@ -442,7 +519,12 @@ class _BetterPlayerMaterialControlsState
                   _buildForwardButton()
                 else
                   const SizedBox(),
-                // _buildSliders(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildVolumeSlider(),
+                  ],
+                ),
               ],
             ),
     );

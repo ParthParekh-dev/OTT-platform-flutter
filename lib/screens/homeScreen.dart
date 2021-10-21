@@ -157,19 +157,37 @@ class _HomeScreenState extends State<HomeScreen> {
                               Align(
                                 alignment: Alignment.topCenter,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(60.0),
+                                  padding: const EdgeInsets.only(
+                                    top: 60.0,
+                                  ),
                                   child: GestureDetector(
                                     onTap: () {
                                       Get.defaultDialog(
                                           title: 'Web series coming Soon!',
                                           middleText: 'Stay tuned');
                                     },
-                                    child: Chip(
-                                      backgroundColor:
-                                          Colors.black.withOpacity(0.5),
-                                      label: Text(
-                                        'Web Series',
-                                        style: TextStyle(color: Colors.white),
+                                    child: Container(
+                                      width: 150,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Center(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text('Web Series',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        //fontWeight: FontWeight.bold,
+                                                        fontSize: 14.0)),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.6),
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
                                     ),
                                   ),
@@ -283,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   left: 15.0),
                                               child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(8.0),
+                                                    BorderRadius.circular(15.0),
                                                 child: CachedNetworkImage(
                                                   fit: BoxFit.contain,
                                                   imageUrl: category
@@ -311,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             } else if (category.iType == IType.COMMING_SOON) {
                               return Container(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.20,
+                                    MediaQuery.of(context).size.height * 0.2,
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -338,124 +356,138 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     Expanded(
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: (category.banners?.length),
-                                        itemBuilder: (context, index) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Get.to(() => VideoDetailScreen(
-                                                  category
-                                                      .banners![index].iVideoId
-                                                      .toString()));
-                                            },
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10.0),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(15.0),
-                                                child: CachedNetworkImage(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.65,
-                                                  fit: BoxFit.fitWidth,
-                                                  imageUrl: category
-                                                      .banners![index]
-                                                      .iBannerUrl,
-                                                  placeholder: (context, url) =>
-                                                      Center(
-                                                          child:
-                                                              CircularProgressIndicator()),
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          Center(
-                                                              child: Icon(
-                                                                  Icons.error)),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 5.0),
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: (category.banners?.length),
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                Get.to(() => VideoDetailScreen(
+                                                    category.banners![index]
+                                                        .iVideoId
+                                                        .toString()));
+                                              },
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10.0),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0),
+                                                  child: CachedNetworkImage(
+                                                    fit: BoxFit.fitHeight,
+                                                    imageUrl: category
+                                                        .banners![index]
+                                                        .iBannerUrl,
+                                                    placeholder: (context,
+                                                            url) =>
+                                                        Center(
+                                                            child:
+                                                                CircularProgressIndicator()),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        Center(
+                                                            child: Icon(
+                                                                Icons.error)),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          );
-                                        },
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               );
                             } else if (category.iType == IType.HORIZONTAL) {
-                              return Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.18,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15.0, vertical: 10),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Get.to(() => ShowCategoryScreen(
-                                              category: category));
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(category.category),
-                                            Icon(
-                                              Icons.chevron_right,
-                                              color: Colors.white,
-                                            )
-                                          ],
+                              return Padding(
+                                padding: (index ==
+                                        homePageController.categoryList.length)
+                                    ? const EdgeInsets.only(bottom: 85.0)
+                                    : const EdgeInsets.all(0.0),
+                                child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.18,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15.0, vertical: 10),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Get.to(() => ShowCategoryScreen(
+                                                category: category));
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(category.category),
+                                              Icon(
+                                                Icons.chevron_right,
+                                                color: Colors.white,
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: (category.banners?.length),
-                                        itemBuilder: (context, index) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Get.to(() => VideoDetailScreen(
-                                                  category
-                                                      .banners![index].iVideoId
-                                                      .toString()));
-                                            },
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10.0),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(15.0),
-                                                child: CachedNetworkImage(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.45,
-                                                  fit: BoxFit.fitWidth,
-                                                  imageUrl: category
-                                                      .banners![index]
-                                                      .iBannerUrl,
-                                                  placeholder: (context, url) =>
-                                                      Center(
-                                                          child:
-                                                              CircularProgressIndicator()),
-                                                  errorWidget:
-                                                      (context, url, error) =>
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5.0),
+                                          child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount:
+                                                (category.banners?.length),
+                                            itemBuilder: (context, index) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Get.to(() =>
+                                                      VideoDetailScreen(category
+                                                          .banners![index]
+                                                          .iVideoId
+                                                          .toString()));
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.0),
+                                                    child: CachedNetworkImage(
+                                                      fit: BoxFit.fitHeight,
+                                                      imageUrl: category
+                                                          .banners![index]
+                                                          .iBannerUrl,
+                                                      placeholder: (context,
+                                                              url) =>
+                                                          Center(
+                                                              child:
+                                                                  CircularProgressIndicator()),
+                                                      errorWidget: (context,
+                                                              url, error) =>
                                                           Center(
                                                               child: Icon(
                                                                   Icons.error)),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                              );
+                                            },
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               );
                             } else {

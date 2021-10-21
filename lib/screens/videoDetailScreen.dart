@@ -53,6 +53,7 @@ class VideoDetailScreen extends StatelessWidget {
       overflowMenuIcon: Icons.settings,
       backwardSkipTimeInMilliseconds: 10000,
       forwardSkipTimeInMilliseconds: 10000,
+      playerTheme: BetterPlayerTheme.material,
       enableSkips: true,
       enableFullscreen: true,
       enablePip: true,
@@ -99,11 +100,6 @@ class VideoDetailScreen extends StatelessWidget {
     return SafeArea(
       child: Obx(
         () => Scaffold(
-          appBar: (videoDetailController.videoPlayerReady.value)
-              ? AppBar(
-                  backgroundColor: Colors.black,
-                )
-              : null,
           body: (videoDetailController.isLoading.value)
               ? Center(
                   child: (CircularProgressIndicator()),
@@ -165,14 +161,27 @@ class VideoDetailScreen extends StatelessWidget {
                                   ),
                                   Positioned(
                                     bottom: -10,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        videoDetailController
-                                            .videoDetails.value!.name,
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Text(
+                                                videoDetailController
+                                                    .videoDetails.value!.name,
+                                                maxLines: 2,
+                                                overflow: TextOverflow.clip,
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   )
