@@ -6,6 +6,8 @@ import 'package:idragon_pro/constants.dart';
 import 'package:get/get.dart';
 import 'package:idragon_pro/screens/googleLoginScreen.dart';
 import 'package:idragon_pro/screens/homeScreen.dart';
+import 'package:idragon_pro/screens/mobileLoginScreen.dart';
+import 'package:idragon_pro/screens/settingScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:idragon_pro/widgets/roundCornerIconButton.dart';
 
@@ -37,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.08,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -56,9 +58,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         Image.asset('assets/logo.png'),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 5.0),
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(() => SettingScreen());
+                            },
                             icon: Icon(
                               Icons.settings,
                               color: Colors.white,
@@ -94,34 +99,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       imagePath: 'assets/editIcon.png'),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/login_rect.png"),
-                          fit: BoxFit.fitWidth,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => MobileLoginScreen());
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Container(
+                          height: 100,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              // stops: [0.0, 1.0],
+                              colors: [
+                                Color(0xFFD39C25),
+                                Color(0xFFFBE254),
+                                Color(0xFFD39C25),
+                              ],
+                            ),
+                          ),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                                    child: Image.asset(
+                                      'assets/vipLogo.png',
+                                      width: 80,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Click here to VIP login',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                )
+                              ]),
                         ),
                       ),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                              child: Image.asset(
-                                'assets/vipLogo.png',
-                                width: 80,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Click here to VIP login',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          ]),
                     ),
                   ),
                   Padding(

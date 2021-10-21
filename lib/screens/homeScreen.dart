@@ -9,8 +9,10 @@ import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/homePageController.dart';
 import 'package:idragon_pro/models/homePageResponse.dart';
 import 'package:idragon_pro/screens/chatScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:idragon_pro/screens/profileScreen.dart';
 import 'package:idragon_pro/screens/searchScreen.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:idragon_pro/screens/showCategoryScreen.dart';
 import 'package:idragon_pro/screens/userScreen.dart';
@@ -130,10 +132,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       color: Colors.white,
                                                       size: 50,
                                                     ),
-                                                    Icon(
-                                                      Icons.share,
-                                                      color: Colors.white,
-                                                      size: 50,
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Share.share(
+                                                            'Hey I’m watching ${banner.videodetails.name}. Check it out now on iDragon New Movies App\nhttps://idragonpro.com/info.php?play=393');
+                                                      },
+                                                      child: Icon(
+                                                        Icons.share,
+                                                        color: Colors.white,
+                                                        size: 50,
+                                                      ),
                                                     )
                                                   ],
                                                 ),
@@ -145,6 +153,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                   );
                                 }).toList(),
+                              ),
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(60.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.defaultDialog(
+                                          title: 'Web series coming Soon!',
+                                          middleText: 'Stay tuned');
+                                    },
+                                    child: Chip(
+                                      backgroundColor:
+                                          Colors.black.withOpacity(0.5),
+                                      label: Text(
+                                        'Web Series',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                               Positioned.fill(
                                 child: Align(
@@ -159,35 +188,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                             offset: Offset(0, 0.75))
                                       ],
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: homePageController.bannerList
-                                          .asMap()
-                                          .entries
-                                          .map((entry) {
-                                        return GestureDetector(
-                                          onTap: () => _controller
-                                              .animateToPage(entry.key),
-                                          child: Container(
-                                            width: 5.0,
-                                            height: 5.0,
-                                            margin: EdgeInsets.symmetric(
-                                                vertical: 8.0, horizontal: 2.0),
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: (Theme.of(context)
-                                                                .brightness ==
-                                                            Brightness.dark
-                                                        ? Colors.white
-                                                        : Colors.white)
-                                                    .withOpacity(
-                                                        _current == entry.key
-                                                            ? 0.9
-                                                            : 0.4)),
-                                          ),
-                                        );
-                                      }).toList(),
+                                    // child: Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.center,
+                                    //   children: homePageController.bannerList
+                                    //       .asMap()
+                                    //       .entries
+                                    //       .map((entry) {
+                                    //     return GestureDetector(
+                                    //       onTap: () => _controller
+                                    //           .animateToPage(entry.key),
+                                    //       child: Container(
+                                    //         width: 5.0,
+                                    //         height: 5.0,
+                                    //         margin: EdgeInsets.symmetric(
+                                    //             vertical: 8.0, horizontal: 2.0),
+                                    //         decoration: BoxDecoration(
+                                    //             shape: BoxShape.circle,
+                                    //             color: (Theme.of(context)
+                                    //                             .brightness ==
+                                    //                         Brightness.dark
+                                    //                     ? Colors.white
+                                    //                     : Colors.white)
+                                    //                 .withOpacity(
+                                    //                     _current == entry.key
+                                    //                         ? 0.9
+                                    //                         : 0.4)),
+                                    //       ),
+                                    //     );
+                                    //   }).toList(),
+                                    // ),
+                                    child: Container(
+                                      child: SizedBox(
+                                        height: 15,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -201,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             if (category.iType == IType.VERTICAL) {
                               return Container(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.35,
+                                    MediaQuery.of(context).size.height * 0.30,
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -272,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               );
-                            } else {
+                            } else if (category.iType == IType.COMMING_SOON) {
                               return Container(
                                 height:
                                     MediaQuery.of(context).size.height * 0.20,
@@ -315,12 +351,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             },
                                             child: Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 15.0),
+                                                  left: 10.0),
                                               child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(8.0),
+                                                    BorderRadius.circular(15.0),
                                                 child: CachedNetworkImage(
-                                                  fit: BoxFit.contain,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.65,
+                                                  fit: BoxFit.fitWidth,
                                                   imageUrl: category
                                                       .banners![index]
                                                       .iBannerUrl,
@@ -343,6 +383,83 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               );
+                            } else if (category.iType == IType.HORIZONTAL) {
+                              return Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.18,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0, vertical: 10),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Get.to(() => ShowCategoryScreen(
+                                              category: category));
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(category.category),
+                                            Icon(
+                                              Icons.chevron_right,
+                                              color: Colors.white,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: (category.banners?.length),
+                                        itemBuilder: (context, index) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              Get.to(() => VideoDetailScreen(
+                                                  category
+                                                      .banners![index].iVideoId
+                                                      .toString()));
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10.0),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                child: CachedNetworkImage(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.45,
+                                                  fit: BoxFit.fitWidth,
+                                                  imageUrl: category
+                                                      .banners![index]
+                                                      .iBannerUrl,
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                          child:
+                                                              CircularProgressIndicator()),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Center(
+                                                              child: Icon(
+                                                                  Icons.error)),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return Container();
                             }
                           } else {
                             return Container();
@@ -389,8 +506,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           Get.to(() => ChatScreen());
+                          // const url =
+                          //     'https://idragonpro.com/chatwindow.php#max-widget';
+                          // if (await canLaunch(url)) {
+                          //   await launch(url);
+                          // } else {
+                          //   throw 'Could not launch $url';
+                          // }
                         },
                         child: Icon(
                           Icons.message,

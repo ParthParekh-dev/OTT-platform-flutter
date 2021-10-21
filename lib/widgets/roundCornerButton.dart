@@ -16,10 +16,12 @@ class RoundCornerButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
+        width: width,
+        height: 45,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-                color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0)
+                color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0),
           ],
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -41,7 +43,6 @@ class RoundCornerButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
             ),
-            minimumSize: MaterialStateProperty.all(Size(width, 50)),
             backgroundColor: MaterialStateProperty.all(Colors.transparent),
             // elevation: MaterialStateProperty.all(3),
             shadowColor: MaterialStateProperty.all(Colors.transparent),
@@ -49,17 +50,11 @@ class RoundCornerButton extends StatelessWidget {
           onPressed: () {
             onpressed();
           },
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: 10,
-              bottom: 10,
-            ),
-            child: Text(
-              buttonText,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-              ),
+          child: Text(
+            buttonText,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
             ),
           ),
         ),

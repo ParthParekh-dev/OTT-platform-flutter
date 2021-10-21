@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:idragon_pro/localeString.dart';
 
 import 'package:idragon_pro/screens/splashScreen.dart';
+import 'package:idragon_pro/screens/subscriptionScreen.dart';
 
 void main() async {
   await GetStorage.init();

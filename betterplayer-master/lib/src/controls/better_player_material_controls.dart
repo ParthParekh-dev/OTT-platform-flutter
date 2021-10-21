@@ -11,6 +11,7 @@ import 'package:better_player/src/controls/better_player_progress_colors.dart';
 import 'package:better_player/src/core/better_player_controller.dart';
 import 'package:better_player/src/core/better_player_utils.dart';
 import 'package:better_player/src/video_player/video_player.dart';
+import 'package:flutter/cupertino.dart';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ class _BetterPlayerMaterialControlsState
   Timer? _showAfterExpandCollapseTimer;
   bool _displayTapped = false;
   bool _wasLoading = false;
+  double _value = 0.0;
   VideoPlayerController? _controller;
   BetterPlayerController? _betterPlayerController;
   StreamSubscription? _controlsVisibilityStreamSubscription;
@@ -69,6 +71,11 @@ class _BetterPlayerMaterialControlsState
   ///Builds main widget of the controls.
   Widget _buildMainWidget() {
     _wasLoading = isLoading(_latestValue);
+    _betterPlayerController!.currentBrightness.then((double brightness) {
+      setState(() {
+        _value = brightness;
+      });
+    });
     if (_latestValue?.hasError == true) {
       return Container(
         color: Colors.black,
@@ -188,6 +195,41 @@ class _BetterPlayerMaterialControlsState
         ),
       );
     }
+  }
+
+  Widget _buildSliders() {
+    if (!betterPlayerController!.controlsEnabled) {
+      return const SizedBox();
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15.0),
+      child: Column(
+        children: [
+          Center(
+            child: AnimatedOpacity(
+              opacity: _hideStuff ? 0.0 : 1.0,
+              duration: _controlsConfiguration.controlsHideTime,
+              child: RotatedBox(
+                quarterTurns: 3,
+                child: Slider(
+                  min: 0.0,
+                  max: 1.0,
+                  value: _value,
+                  onChanged: (value) {
+                    setState(() {
+                      if (value > 0.01) {
+                        _value = value;
+                      }
+                    });
+                    _betterPlayerController!.setBrightness(_value);
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildTopBar() {
@@ -387,8 +429,10 @@ class _BetterPlayerMaterialControlsState
       child: _betterPlayerController?.isLiveStream() == true
           ? const SizedBox()
           : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // _buildSliders(),
                 if (_controlsConfiguration.enableSkips)
                   _buildSkipButton()
                 else
@@ -398,6 +442,7 @@ class _BetterPlayerMaterialControlsState
                   _buildForwardButton()
                 else
                   const SizedBox(),
+                // _buildSliders(),
               ],
             ),
     );

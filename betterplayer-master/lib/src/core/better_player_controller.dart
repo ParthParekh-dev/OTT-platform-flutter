@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:path_provider/path_provider.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 
 ///Class used to control overall Better Player behavior. Main class to change
 ///state of Better Player.
@@ -669,6 +670,42 @@ class BetterPlayerController {
       _postEvent(BetterPlayerEvent(BetterPlayerEventType.finished));
     } else {
       cancelNextVideoTimer();
+    }
+  }
+
+  Future<double> get initialBrightness async {
+    try {
+      return await ScreenBrightness.initial;
+    } catch (e) {
+      print(e);
+      throw 'Failed to get initial brightness';
+    }
+  }
+
+  Future<double> get currentBrightness async {
+    try {
+      return await ScreenBrightness.current;
+    } catch (e) {
+      print(e);
+      throw 'Failed to get current brightness';
+    }
+  }
+
+  Future<void> setBrightness(double brightness) async {
+    try {
+      await ScreenBrightness.setScreenBrightness(brightness);
+    } catch (e) {
+      print(e);
+      throw 'Failed to set brightness';
+    }
+  }
+
+  Future<void> resetBrightness() async {
+    try {
+      await ScreenBrightness.resetScreenBrightness();
+    } catch (e) {
+      print(e);
+      throw 'Failed to reset brightness';
     }
   }
 

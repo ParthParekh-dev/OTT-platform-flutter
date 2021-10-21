@@ -40,9 +40,8 @@ class _PromoScreenState extends State<PromoScreen> {
             deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
             controlsConfiguration: controlsConfiguration,
             aspectRatio: 9 / 16,
-            fullScreenAspectRatio: 9 / 16,
             allowedScreenSleep: false,
-            fit: BoxFit.contain);
+            fit: BoxFit.fill);
 
     BetterPlayerDataSource dataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
@@ -57,38 +56,44 @@ class _PromoScreenState extends State<PromoScreen> {
 
     return SafeArea(
       child: Scaffold(
-        body: Obx(() => Container(
-              color: Colors.black,
-              child: (promoController.isLoading.value)
-                  ? Center(child: (CircularProgressIndicator()))
-                  : Stack(
-                      children: [
-                        BetterPlayer(
-                          controller: _betterPlayerController,
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 60),
-                            child: RoundCornerButton(
-                                buttonText: (promoController.isTimerOver.value)
-                                    ? ('Continue')
-                                    : promoController.coundDown.toString(),
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                onpressed: () {
-                                  if (promoController.isTimerOver.value) {
-                                    Get.off(() => GetStorage()
-                                            .read(Constant().IS_GOOGLE_LOGIN)
-                                        ? HomeScreen()
-                                        : GoogleLoginScreen());
-                                  } else {
-                                    null;
-                                  }
-                                }),
+        body: Obx(() => Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                color: Colors.black,
+                child: (promoController.isLoading.value)
+                    ? Center(child: (CircularProgressIndicator()))
+                    : Stack(
+                        children: [
+                          BetterPlayer(
+                            controller: _betterPlayerController,
                           ),
-                        )
-                      ],
-                    ),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 60),
+                              child: RoundCornerButton(
+                                  buttonText: (promoController
+                                          .isTimerOver.value)
+                                      ? ('Continue')
+                                      : promoController.coundDown.toString(),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  onpressed: () {
+                                    if (promoController.isTimerOver.value) {
+                                      Get.off(() => GetStorage()
+                                              .read(Constant().IS_GOOGLE_LOGIN)
+                                          ? HomeScreen()
+                                          : GoogleLoginScreen());
+                                    } else {
+                                      null;
+                                    }
+                                  }),
+                            ),
+                          )
+                        ],
+                      ),
+              ),
             )),
       ),
     );

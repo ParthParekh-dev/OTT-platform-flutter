@@ -19,6 +19,7 @@ class RoundCornerIconButton extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Container(
         width: width,
+        height: 45,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -44,7 +45,6 @@ class RoundCornerIconButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
             ),
-            minimumSize: MaterialStateProperty.all(Size(width, 50)),
             backgroundColor: MaterialStateProperty.all(Colors.transparent),
             // elevation: MaterialStateProperty.all(3),
             shadowColor: MaterialStateProperty.all(Colors.transparent),
@@ -52,25 +52,19 @@ class RoundCornerIconButton extends StatelessWidget {
           onPressed: () {
             onpressed();
           },
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: 10,
-              bottom: 10,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset(imagePath),
-                Text(
-                  buttonText,
-                  style: TextStyle(
-                    fontSize: 18,
-                    // fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.asset(imagePath),
+              Text(
+                buttonText,
+                style: TextStyle(
+                  fontSize: 16,
+                  // fontWeight: FontWeight.w700,
+                  color: Colors.white,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

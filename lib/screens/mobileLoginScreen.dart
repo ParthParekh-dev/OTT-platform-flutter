@@ -28,7 +28,7 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.1,
+                      height: MediaQuery.of(context).size.height * 0.08,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -48,8 +48,8 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                           ),
                           Image.asset('assets/logo.png'),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 15.0),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 5.0),
                             child: Icon(
                               Icons.settings,
                               color: Colors.black,

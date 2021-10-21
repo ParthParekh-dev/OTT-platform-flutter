@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:better_player/better_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +10,7 @@ import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/videoDetailController.dart';
 import 'package:idragon_pro/screens/mobileLoginScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
+import 'package:share_plus/share_plus.dart';
 
 class VideoDetailScreen extends StatelessWidget {
   late BetterPlayerController _betterPlayerController;
@@ -83,7 +82,7 @@ class VideoDetailScreen extends StatelessWidget {
             aspectRatio: 16 / 9,
             fullScreenAspectRatio: 16 / 9,
             allowedScreenSleep: false,
-            fit: BoxFit.contain);
+            fit: BoxFit.fitHeight);
 
     BetterPlayerDataSource dataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
@@ -255,10 +254,16 @@ class VideoDetailScreen extends StatelessWidget {
                             ),
                             Column(
                               children: [
-                                Icon(
-                                  Icons.share,
-                                  color: Colors.white,
-                                  size: 30,
+                                GestureDetector(
+                                  onTap: () {
+                                    Share.share(
+                                        'Hey I’m watching ${videoDetailController.videoDetails.value!.name}. Check it out now on iDragon New Movies App\nhttps://idragonpro.com/info.php?play=393');
+                                  },
+                                  child: Icon(
+                                    Icons.share,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
                                 ),
                                 Text(
                                   'Share',
