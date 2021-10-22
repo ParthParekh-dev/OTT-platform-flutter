@@ -9,6 +9,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/videoDetailController.dart';
 import 'package:idragon_pro/screens/mobileLoginScreen.dart';
+import 'package:idragon_pro/widgets/descriptionText.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -189,16 +190,18 @@ class VideoDetailScreen extends StatelessWidget {
                               ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            videoDetailController.videoDetails.value!.synopsis,
-                            maxLines: 2,
-                          ),
+                          // child: Text(
+                          //   videoDetailController.videoDetails.value!.synopsis,
+                          //   maxLines: 2,
+                          // ),
+                          child: DescriptionTextWidget(videoDetailController
+                              .videoDetails.value!.synopsis),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             RoundCornerButton(
-                                buttonText: 'Trailer',
+                                buttonText: 'trailer'.tr,
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 onpressed: () {
                                   activateVideoPlayer(
@@ -212,14 +215,14 @@ class VideoDetailScreen extends StatelessWidget {
                                   // ]);
                                 }),
                             RoundCornerButton(
-                                buttonText: 'Play',
+                                buttonText: 'play'.tr,
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 onpressed: () {
                                   if (videoDetailController
                                           .videoDetails.value!.comingSoon ==
                                       "Yes") {
                                     Get.defaultDialog(
-                                        title: 'Coming Soon',
+                                        title: 'coming_soon'.tr,
                                         middleText: 'Stay tuned');
                                   } else if (videoDetailController
                                           .videoDetails.value!.isFree ==
@@ -256,7 +259,7 @@ class VideoDetailScreen extends StatelessWidget {
                                         ),
                                 ),
                                 Text(
-                                  'Watch List',
+                                  'watch_list'.tr,
                                   style: TextStyle(fontSize: 15),
                                 )
                               ],
@@ -275,7 +278,7 @@ class VideoDetailScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'Share',
+                                  'share'.tr,
                                   style: TextStyle(fontSize: 15),
                                 )
                               ],
@@ -285,7 +288,7 @@ class VideoDetailScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: Text(
-                            'More Details',
+                            'more_details'.tr,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
@@ -305,22 +308,22 @@ class VideoDetailScreen extends StatelessWidget {
                                 .toString()
                                 .replaceAll('[', '')
                                 .replaceAll(']', ''),
-                            title: 'Genre'),
+                            title: 'gener'.tr),
                         VideoDetailTile(
                             subtitle: videoDetailController
                                 .videoDetails.value!.sDirector,
-                            title: 'Directors'),
+                            title: 'directors'.tr),
                         VideoDetailTile(
                             subtitle: videoDetailController
                                 .videoDetails.value!.starCast
                                 .toString()
                                 .replaceAll('[', '')
                                 .replaceAll(']', ''),
-                            title: 'Cast'),
+                            title: 'cast'.tr),
                         VideoDetailTile(
                             subtitle: videoDetailController
                                 .videoDetails.value!.category,
-                            title: 'Language'),
+                            title: 'language'.tr),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.1,
                         )

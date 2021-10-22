@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
-                                                child: Text('Web Series',
+                                                child: Text('web_series'.tr,
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         //fontWeight: FontWeight.bold,

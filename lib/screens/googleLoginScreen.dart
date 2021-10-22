@@ -37,7 +37,7 @@ class GoogleLoginScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'WELCOME',
+                            'welcome'.tr,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,

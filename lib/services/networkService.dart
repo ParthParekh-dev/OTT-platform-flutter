@@ -1,6 +1,9 @@
 import 'dart:core';
+import 'dart:io';
 
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/models/addToWatchlistRespose.dart';
 import 'package:idragon_pro/models/googleLoginResponse.dart';
 import 'package:idragon_pro/models/homePageResponse.dart';
@@ -9,9 +12,31 @@ import 'package:idragon_pro/models/promoResponse.dart';
 import 'package:idragon_pro/models/searchResponse.dart';
 import 'package:idragon_pro/models/videoDetailResponse.dart';
 import 'package:idragon_pro/models/watchListResponse.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class NetworkService {
   Future<HomePageResponse?> fetchHomePage() async {
+    // var deviceInfo = DeviceInfoPlugin();
+    // late var model;
+    // if (Platform.isIOS) {
+    //   IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    //   model = iosInfo.utsname.machine;
+    // } else {
+    //   AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    //   model = androidInfo.model;
+    // }
+    //
+    // http.Response response1 = await http.post(
+    //   Uri.encodeFull(
+    //       'https://idragonpro.com/idragon/api/v.08.2021/userinfobyid_new?id=${GetStorage().read(Constant().GOOGLE_ID)}&deviceId=$model&firebaseId=${GetStorage().read(Constant().FIREBASE_ID)}&versionCode=32'),
+    //   headers: <String, String>{
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //   },
+    // );
+    // print('/////////////////////' + response1.statusCode.toString());
+    // print(
+    //     'https://idragonpro.com/idragon/api/v.08.2021/userinfobyid_new?id=${GetStorage().read(Constant().GOOGLE_ID)}&deviceId=$model&firebaseId=${GetStorage().read(Constant().FIREBASE_ID)}&versionCode=32');
+
     http.Response response = await http.get(
       Uri.parse(
           'https://idragonpro.com/idragon/api/v.08.2021/get_home_banners?versionCode=32'),

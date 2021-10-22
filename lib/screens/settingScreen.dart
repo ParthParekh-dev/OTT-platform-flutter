@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:idragon_pro/screens/languageScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -72,13 +73,13 @@ class _SettingScreenState extends State<SettingScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Movie Subscription',
+                    'Movies Subscription'.tr,
                     style: TextStyle(fontSize: 16),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.6,
                       height: 45,
                       decoration: BoxDecoration(
                         boxShadow: [
@@ -116,7 +117,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                         onPressed: () {},
                         child: Text(
-                          'No Active Subscription',
+                          'no_active_subscription'.tr,
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.white,
@@ -139,7 +140,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.6,
                       height: 45,
                       decoration: BoxDecoration(
                         boxShadow: [
@@ -177,7 +178,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                         onPressed: () {},
                         child: Text(
-                          'No Active Subscription',
+                          'no_active_subscription'.tr,
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.white,
@@ -194,14 +195,14 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                   ),
                   Text(
-                    'Notifications',
+                    'notifications'.tr,
                     style: TextStyle(fontSize: 16),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Notification Setting',
+                        'notification_setting'.tr,
                         style: TextStyle(fontSize: 16),
                       ),
                       Switch(
@@ -222,14 +223,14 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                   ),
                   Text(
-                    'Language',
+                    'language'.tr,
                     style: TextStyle(fontSize: 16),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'English',
+                        'current_language'.tr,
                         style: TextStyle(fontSize: 16),
                       ),
                       Container(
@@ -269,7 +270,9 @@ class _SettingScreenState extends State<SettingScreen> {
                             shadowColor:
                                 MaterialStateProperty.all(Colors.transparent),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(LanguageScreen());
+                          },
                           child: Text(
                             'Change',
                             style: TextStyle(
@@ -289,7 +292,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                   ),
                   Text(
-                    'Help and FAQs',
+                    'faq_help'.tr,
                     style: TextStyle(fontSize: 16),
                   ),
                   Padding(
@@ -300,7 +303,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                   ),
                   Text(
-                    'Privacy Policy',
+                    'privacy_policy'.tr,
                     style: TextStyle(fontSize: 16),
                   ),
                   Padding(
@@ -311,21 +314,21 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                   ),
                   Text(
-                    'Contact Us',
+                    'contact_us'.tr,
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
-                    'Contact Idragon Team',
+                    'contact_idragon_team'.tr,
                     style: TextStyle(fontSize: 16),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Text',
+                        'email_profile'.tr,
                         style: TextStyle(fontSize: 16),
                       ),
                       Text(
@@ -338,7 +341,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Contact',
+                        'contact'.tr,
                         style: TextStyle(fontSize: 16),
                       ),
                       Text(
@@ -351,7 +354,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Customer Support',
+                        'customer_support'.tr,
                         style: TextStyle(fontSize: 16),
                       ),
                       Text(

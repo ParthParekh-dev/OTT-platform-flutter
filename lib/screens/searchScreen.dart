@@ -33,7 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
               print(value);
             },
             decoration: InputDecoration(
-              hintText: 'Search here',
+              hintText: 'search'.tr,
               hintStyle: TextStyle(color: Color(0xFFB4B4FF)),
               prefixIcon: Icon(
                 Icons.search,

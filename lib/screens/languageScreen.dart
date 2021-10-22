@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:idragon_pro/screens/homeScreen.dart';
-
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 
 class LanguageScreen extends StatelessWidget {
@@ -125,7 +124,7 @@ class RadioGroupWidget extends State {
             alignment: Alignment.topLeft,
             child: Padding(
               padding: const EdgeInsets.only(left: 15),
-              child: Text('Select Language',
+              child: Text('select_language'.tr,
                   style: TextStyle(fontSize: 18, color: Colors.white)),
             )),
         Expanded(
@@ -231,7 +230,7 @@ class RadioGroupWidget extends State {
         Padding(
           padding: const EdgeInsets.all(15.0),
           child: RoundCornerButton(
-              buttonText: 'Continue',
+              buttonText: 'continue_lan'.tr,
               width: MediaQuery.of(context).size.width * 0.8,
               onpressed: () {
                 Get.updateLocale(locale);

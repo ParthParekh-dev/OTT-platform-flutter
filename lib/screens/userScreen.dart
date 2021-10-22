@@ -63,7 +63,7 @@ class _UserScreenState extends State<UserScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: Text(
-                'Watch List',
+                'watch_list'.tr,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),

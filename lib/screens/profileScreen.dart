@@ -93,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   RoundCornerIconButton(
-                      buttonText: 'Edit',
+                      buttonText: 'edit'.tr,
                       width: MediaQuery.of(context).size.width * 0.3,
                       onpressed: () {},
                       imagePath: 'assets/editIcon.png'),
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Click here to VIP login',
+                                      'click_here_to_vip_login'.tr,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                           color: Colors.black,
@@ -155,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40.0),
                     child: RoundCornerButton(
-                        buttonText: 'Log out',
+                        buttonText: 'logout'.tr,
                         width: MediaQuery.of(context).size.width * 0.3,
                         onpressed: () {
                           Get.defaultDialog(
