@@ -6,16 +6,16 @@ import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/loginController.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 
-class MobileLoginScreen extends StatefulWidget {
+class EditProfileScreen extends StatefulWidget {
   @override
-  _MobileLoginScreenState createState() => _MobileLoginScreenState();
+  _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
-class _MobileLoginScreenState extends State<MobileLoginScreen> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   final iDragon_data = GetStorage();
   final LoginController loginController = Get.put(LoginController());
-  final myController = TextEditingController();
-  var argumentData = Get.arguments;
+  final fNameController = TextEditingController();
+  final lNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Text(
-                        'LOGIN',
+                        'edit'.tr,
                         style: TextStyle(
                             color: Color(0xFFFFC737),
                             fontSize: 25,
@@ -71,44 +71,46 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 8),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Enter Mobile Number',
-                          textAlign: TextAlign.start,
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: TextField(
+                        textCapitalization: TextCapitalization.sentences,
+                        controller: fNameController,
+                        onChanged: (value) {
+                          print(fNameController.text);
+                        },
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Enter first name',
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10.0),
                       child: TextField(
-                        controller: myController,
+                        textCapitalization: TextCapitalization.sentences,
+                        controller: lNameController,
                         onChanged: (value) {
-                          print(myController.text);
+                          print(lNameController.text);
                         },
-                        keyboardType: TextInputType.phone,
+                        keyboardType: TextInputType.name,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: 'Enter phone number',
+                          hintText: 'Enter last name',
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 40.0),
                       child: RoundCornerButton(
-                          buttonText: 'Log in',
+                          buttonText: 'Save',
                           width: MediaQuery.of(context).size.width * 0.6,
                           onpressed: () {
-                            String id = iDragon_data.read(Constant().USER_ID);
-                            String name =
-                                iDragon_data.read(Constant().GOOGLE_NAME);
-                            String email =
-                                iDragon_data.read(Constant().GOOGLE_EMAIL);
-                            loginController.mobileLogin(id, myController.text,
-                                name, email, argumentData[0].toString());
+                            loginController.updateProfile(
+                                fNameController.text, lNameController.text);
                           }),
                     ),
                     Obx(() => (loginController.isLoading.value)

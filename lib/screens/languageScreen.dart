@@ -203,7 +203,15 @@ class RadioGroupWidget extends State {
                                             hoverColor: Colors.white,
                                             groupValue: id,
                                             value: data.index,
-                                            onChanged: (val) {},
+                                            onChanged: (val) {
+                                              setState(() {
+                                                radioItem = data.name;
+                                                id = data.index;
+                                                locale = Locale(
+                                                    data.languageCode,
+                                                    data.countryCode);
+                                              });
+                                            },
                                           ),
                                         ),
                                       ),

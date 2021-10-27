@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:idragon_pro/constants.dart';
-import 'package:idragon_pro/controllers/homePageController.dart';
+import 'package:idragon_pro/controllers/webSeriesController.dart';
 import 'package:idragon_pro/models/homePageResponse.dart';
 import 'package:idragon_pro/screens/chatScreen.dart';
-import 'package:idragon_pro/screens/webSeriesScreen.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:idragon_pro/screens/profileScreen.dart';
 import 'package:idragon_pro/screens/searchScreen.dart';
 import 'package:share_plus/share_plus.dart';
@@ -18,19 +16,19 @@ import 'package:idragon_pro/screens/showCategoryScreen.dart';
 import 'package:idragon_pro/screens/userScreen.dart';
 import 'package:idragon_pro/screens/videoDetailScreen.dart';
 
-class HomeScreen extends StatefulWidget {
+class WebSeriesScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _WebSeriesScreenState createState() => _WebSeriesScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final HomePageController homePageController = Get.put(HomePageController());
-  int _current = 0;
+class _WebSeriesScreenState extends State<WebSeriesScreen> {
+  final WebSeriesController webSeriesController =
+      Get.put(WebSeriesController());
   final CarouselController _controller = CarouselController();
 
   @override
   void initState() {
-    homePageController.fetchHomePage();
+    webSeriesController.fetchWebSeries();
     super.initState();
   }
 
@@ -40,13 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           Obx(
-            () => (homePageController.isLoading.value)
+            () => (webSeriesController.isLoading.value)
                 ? Center(child: (CircularProgressIndicator()))
                 : MediaQuery.removePadding(
                     context: context,
                     removeTop: true,
                     child: ListView.builder(
-                      itemCount: homePageController.categoryList.length + 1,
+                      itemCount: webSeriesController.categoryList.length + 1,
                       itemBuilder: (BuildContext context, int index) {
                         if (index == 0) {
                           return Stack(
@@ -62,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   viewportFraction: 1,
                                   onPageChanged: (index, reason) {
                                     setState(() {
-                                      _current = index;
+                                      // _current = index;
                                     });
                                   },
                                   initialPage: 0,
@@ -75,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   scrollDirection: Axis.horizontal,
                                 ),
                                 carouselController: _controller,
-                                items:
-                                    homePageController.bannerList.map((banner) {
+                                items: webSeriesController.bannerList
+                                    .map((banner) {
                                   return Builder(
                                     builder: (BuildContext context) {
                                       return GestureDetector(
@@ -112,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   children: [
                                                     GestureDetector(
                                                       onTap: () {
-                                                        homePageController
+                                                        webSeriesController
                                                             .addToWatchlist(
                                                                 GetStorage().read(
                                                                     Constant()
@@ -161,10 +159,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       top: 60.0, right: 20.0),
                                   child: GestureDetector(
                                     onTap: () {
-                                      Get.to(() => WebSeriesScreen());
-                                      // Get.defaultDialog(
-                                      //     title: 'Web series coming Soon!',
-                                      //     middleText: 'Stay tuned');
+                                      Get.defaultDialog(
+                                          title: 'Web series coming Soon!',
+                                          middleText: 'Stay tuned');
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -262,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         } else {
                           var category =
-                              homePageController.categoryList[index - 1];
+                              webSeriesController.categoryList[index - 1];
                           if (category.banners != null) {
                             if (category.iType == IType.VERTICAL) {
                               return Container(
@@ -418,7 +415,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             } else if (category.iType == IType.HORIZONTAL) {
                               return Padding(
                                 padding: (index ==
-                                        homePageController.categoryList.length)
+                                        webSeriesController.categoryList.length)
                                     ? const EdgeInsets.only(bottom: 85.0)
                                     : const EdgeInsets.all(0.0),
                                 child: Container(

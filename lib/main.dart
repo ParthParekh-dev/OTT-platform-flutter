@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:idragon_pro/localeString.dart';
 
 import 'package:idragon_pro/screens/splashScreen.dart';
-import 'package:idragon_pro/screens/subscriptionScreen.dart';
 
 void main() async {
   await GetStorage.init();
@@ -20,6 +19,7 @@ void main() async {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // print("test test1 test2".replaceAll(new RegExp(r"\s+\b|\b\s"), ""));
     return GetMaterialApp(
       defaultTransition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 500),

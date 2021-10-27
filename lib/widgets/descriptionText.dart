@@ -35,8 +35,12 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
       child: secondHalf.isEmpty
           ? Text(firstHalf)
           : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(flag ? (firstHalf + "...") : (firstHalf + secondHalf)),
+                Text(
+                  flag ? (firstHalf + "...") : (firstHalf + secondHalf),
+                  textAlign: TextAlign.left,
+                ),
                 InkWell(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,

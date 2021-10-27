@@ -82,7 +82,7 @@ class _UserScreenState extends State<UserScreen> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          Get.to(() => VideoDetailScreen(watchListController
+                          Get.to(() => VideoDetailScreen(id:watchListController
                               .watchList.value[index].iVideoId
                               .toString()));
                         },

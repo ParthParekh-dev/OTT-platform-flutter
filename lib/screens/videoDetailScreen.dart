@@ -21,83 +21,86 @@ class VideoDetailScreen extends StatelessWidget {
 
   onBackPressed(var navigatorKey) {}
 
-  VideoDetailScreen(String id) {
+  VideoDetailScreen({required id}) {
     videoDetailController.fetchVideoDetails(id);
-  }
-  Future<void> activateVideoPlayer({required String videoUrl}) async {
-    String? platformVersion;
-
-    try {
-      platformVersion = await FlutterSimCountryCode.simCountryCode;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    print(platformVersion);
-
-    try {
-      _betterPlayerController.pause();
-    } catch (e) {
-      print(e);
-    }
-
-    videoDetailController.videoPlayerReady.value = false;
-    BetterPlayerControlsConfiguration controlsConfiguration =
-        BetterPlayerControlsConfiguration(
-      controlBarColor: Colors.black26,
-      iconsColor: Colors.white,
-      playIcon: Icons.play_arrow_outlined,
-      progressBarPlayedColor: Colors.indigo,
-      progressBarHandleColor: Colors.indigo,
-      skipBackIcon: Icons.replay_10_outlined,
-      skipForwardIcon: Icons.forward_10_outlined,
-      overflowMenuIcon: Icons.settings,
-      backwardSkipTimeInMilliseconds: 10000,
-      forwardSkipTimeInMilliseconds: 10000,
-      playerTheme: BetterPlayerTheme.material,
-      enableSkips: true,
-      enableFullscreen: true,
-      enablePip: true,
-      enablePlayPause: true,
-      enableMute: true,
-      enableAudioTracks: true,
-      enableProgressText: true,
-      enableSubtitles: false,
-      showControlsOnInitialize: true,
-      enablePlaybackSpeed: true,
-      loadingColor: Colors.red,
-      overflowModalColor: Colors.black54,
-      overflowModalTextColor: Colors.white,
-      overflowMenuIconsColor: Colors.white,
-    );
-
-    BetterPlayerConfiguration betterPlayerConfiguration =
-        BetterPlayerConfiguration(
-            autoPlay: true,
-            fullScreenByDefault: false,
-            deviceOrientationsOnFullScreen: [
-              DeviceOrientation.landscapeLeft,
-              DeviceOrientation.landscapeRight
-            ],
-            deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
-            controlsConfiguration: controlsConfiguration,
-            aspectRatio: 16 / 9,
-            fullScreenAspectRatio: 16 / 9,
-            allowedScreenSleep: false,
-            fit: BoxFit.fitHeight);
-
-    BetterPlayerDataSource dataSource = BetterPlayerDataSource(
-      BetterPlayerDataSourceType.network,
-      videoUrl,
-    );
-
-    _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
-    _betterPlayerController.setupDataSource(dataSource);
-    videoDetailController.videoPlayerReady.value = true;
   }
 
   @override
   Widget build(BuildContext context) {
+    Future<void> activateVideoPlayer({required String videoUrl}) async {
+      String? platformVersion;
+
+      try {
+        platformVersion = await FlutterSimCountryCode.simCountryCode;
+      } on PlatformException {
+        platformVersion = 'Failed to get platform version.';
+      }
+
+      print(platformVersion);
+
+      try {
+        _betterPlayerController.pause();
+      } catch (e) {
+        print(e);
+      }
+
+      videoDetailController.videoPlayerReady.value = false;
+      BetterPlayerControlsConfiguration controlsConfiguration =
+          BetterPlayerControlsConfiguration(
+        controlBarColor: Colors.black26,
+        iconsColor: Colors.white,
+        playIcon: Icons.play_arrow_outlined,
+        progressBarPlayedColor: Colors.indigo,
+        progressBarHandleColor: Colors.indigo,
+        skipBackIcon: Icons.replay_10_outlined,
+        skipForwardIcon: Icons.forward_10_outlined,
+        overflowMenuIcon: Icons.settings,
+        backwardSkipTimeInMilliseconds: 10000,
+        forwardSkipTimeInMilliseconds: 10000,
+        playerTheme: BetterPlayerTheme.material,
+        enableSkips: true,
+        enableFullscreen: true,
+        enablePip: true,
+        enablePlayPause: true,
+        enableMute: true,
+        enableAudioTracks: true,
+        enableProgressText: true,
+        enableSubtitles: false,
+        showControlsOnInitialize: true,
+        enablePlaybackSpeed: true,
+        loadingColor: Colors.red,
+        overflowModalColor: Colors.black54,
+        overflowModalTextColor: Colors.white,
+        overflowMenuIconsColor: Colors.white,
+      );
+
+      BetterPlayerConfiguration betterPlayerConfiguration =
+          BetterPlayerConfiguration(
+              autoPlay: true,
+              fullScreenByDefault: false,
+              deviceOrientationsOnFullScreen: [
+                DeviceOrientation.landscapeLeft,
+                DeviceOrientation.landscapeRight
+              ],
+              autoDetectFullscreenDeviceOrientation: false,
+              deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
+              controlsConfiguration: controlsConfiguration,
+              aspectRatio: MediaQuery.of(context).size.width /
+                  MediaQuery.of(context).size.height,
+              allowedScreenSleep: false,
+              fit: BoxFit.cover);
+
+      BetterPlayerDataSource dataSource = BetterPlayerDataSource(
+        BetterPlayerDataSourceType.network,
+        videoUrl,
+      );
+
+      _betterPlayerController =
+          BetterPlayerController(betterPlayerConfiguration);
+      _betterPlayerController.setupDataSource(dataSource);
+      videoDetailController.videoPlayerReady.value = true;
+    }
+
     return SafeArea(
       child: Obx(
         () => Scaffold(
@@ -110,8 +113,12 @@ class VideoDetailScreen extends StatelessWidget {
                     Column(
                       children: [
                         (videoDetailController.videoPlayerReady.value)
-                            ? BetterPlayer(
-                                controller: _betterPlayerController,
+                            ? Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.33,
+                                child: BetterPlayer(
+                                  controller: _betterPlayerController,
+                                ),
                               )
                             : Stack(
                                 children: [
@@ -218,20 +225,29 @@ class VideoDetailScreen extends StatelessWidget {
                                 buttonText: 'play'.tr,
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 onpressed: () {
-                                  if (videoDetailController
-                                          .videoDetails.value!.comingSoon ==
-                                      "Yes") {
+                                  var videoDetail =
+                                      videoDetailController.videoDetails.value!;
+                                  if (videoDetail.comingSoon == "Yes") {
                                     Get.defaultDialog(
                                         title: 'coming_soon'.tr,
                                         middleText: 'Stay tuned');
-                                  } else if (videoDetailController
-                                          .videoDetails.value!.isFree ==
-                                      "Yes") {
+                                  } else if (videoDetail.isFree == "Yes") {
                                     activateVideoPlayer(
-                                        videoUrl: videoDetailController
-                                            .videoDetails.value!.videoUrl);
+                                        videoUrl: videoDetail.videoUrl);
+                                  } else if (videoDetail.sAllowedInPackage ==
+                                      "1") {
+                                    if (videoDetail.daysdiff > 0 ||
+                                        videoDetail.timediff > 0) {
+                                      activateVideoPlayer(
+                                          videoUrl: videoDetail.videoUrl);
+                                    }
+                                  } else if (GetStorage()
+                                      .read(Constant().IS_MOVIE_SUBS)) {
+                                    activateVideoPlayer(
+                                        videoUrl: videoDetail.videoUrl);
                                   } else {
-                                    Get.to(() => MobileLoginScreen());
+                                    Get.to(() => MobileLoginScreen(),
+                                        arguments: [videoDetail.id]);
                                   }
                                 })
                           ],

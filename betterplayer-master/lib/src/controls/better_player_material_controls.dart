@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class BetterPlayerMaterialControls extends StatefulWidget {
   ///Callback used to send information if player bar is hidden or not
@@ -203,39 +204,40 @@ class _BetterPlayerMaterialControlsState
       return const SizedBox();
     }
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Center(
-          child: AnimatedOpacity(
-            opacity: _hideStuff ? 0.0 : 1.0,
-            duration: _controlsConfiguration.controlsHideTime,
-            child: SizedBox(
-              height: 150,
-              child: RotatedBox(
-                  quarterTurns: 3,
-                  child: SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                      thumbColor: Colors.white,
-                      activeTrackColor: Colors.white,
-                      trackHeight: 1.0,
-                      thumbShape:
-                          RoundSliderThumbShape(enabledThumbRadius: 5.0),
-                    ),
-                    child: Slider(
-                      min: 0.0,
-                      max: 1.0,
-                      value: _brightnessValue,
-                      onChanged: (value) {
-                        setState(() {
-                          if (value > 0.01) {
-                            _brightnessValue = value;
-                          }
-                        });
-                        _betterPlayerController!
-                            .setBrightness(_brightnessValue);
-                      },
-                    ),
-                  )),
-            ),
+        Icon(
+          Icons.brightness_5,
+          color: Colors.white,
+        ),
+        AnimatedOpacity(
+          opacity: _hideStuff ? 0.0 : 1.0,
+          duration: _controlsConfiguration.controlsHideTime,
+          child: SizedBox(
+            height: _betterPlayerController!.isFullScreen ? 170 : 110,
+            child: RotatedBox(
+                quarterTurns: 3,
+                child: SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    thumbColor: Colors.white,
+                    activeTrackColor: Colors.white,
+                    trackHeight: 1.0,
+                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5.0),
+                  ),
+                  child: Slider(
+                    min: 0.0,
+                    max: 1.0,
+                    value: _brightnessValue,
+                    onChanged: (value) {
+                      setState(() {
+                        if (value > 0.01) {
+                          _brightnessValue = value;
+                        }
+                      });
+                      _betterPlayerController!.setBrightness(_brightnessValue);
+                    },
+                  ),
+                )),
           ),
         ),
       ],
@@ -246,14 +248,19 @@ class _BetterPlayerMaterialControlsState
     if (!betterPlayerController!.controlsEnabled) {
       return const SizedBox();
     }
-    return Column(
-      children: [
-        Center(
-          child: AnimatedOpacity(
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: Column(
+        children: [
+          Icon(
+            Icons.volume_up,
+            color: Colors.white,
+          ),
+          AnimatedOpacity(
             opacity: _hideStuff ? 0.0 : 1.0,
             duration: _controlsConfiguration.controlsHideTime,
             child: SizedBox(
-              height: 150,
+              height: _betterPlayerController!.isFullScreen ? 170 : 110,
               child: RotatedBox(
                 quarterTurns: 3,
                 child: SliderTheme(
@@ -281,8 +288,8 @@ class _BetterPlayerMaterialControlsState
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -384,8 +391,8 @@ class _BetterPlayerMaterialControlsState
         Navigator.pop(context);
       },
       child: Container(
-        margin: const EdgeInsets.only(left: 12.0),
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        margin: const EdgeInsets.only(left: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 3.0),
         child: Icon(
           Icons.arrow_back,
           color: _controlsConfiguration.iconsColor,

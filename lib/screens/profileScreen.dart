@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:idragon_pro/constants.dart';
 
 import 'package:get/get.dart';
+import 'package:idragon_pro/screens/editProfileScreen.dart';
 import 'package:idragon_pro/screens/googleLoginScreen.dart';
 import 'package:idragon_pro/screens/homeScreen.dart';
 import 'package:idragon_pro/screens/mobileLoginScreen.dart';
@@ -95,7 +96,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   RoundCornerIconButton(
                       buttonText: 'edit'.tr,
                       width: MediaQuery.of(context).size.width * 0.3,
-                      onpressed: () {},
+                      onpressed: () {
+                        Get.to(() => EditProfileScreen());
+                      },
                       imagePath: 'assets/editIcon.png'),
                   Padding(
                     padding: const EdgeInsets.all(15.0),

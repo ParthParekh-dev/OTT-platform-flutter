@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final videoDetailResponse = videoDetailResponseFromJson(jsonString);
+
 import 'dart:convert';
 
 VideoDetailResponse videoDetailResponseFromJson(String str) =>
@@ -46,7 +50,7 @@ class Video {
     required this.synopsis,
     required this.bigBannerUrl,
     required this.smallBannerUrl,
-    this.infoBannerUrl,
+    required this.infoBannerUrl,
     required this.trailerUrl,
     required this.videoUrl,
     required this.comingSoon,
@@ -92,7 +96,12 @@ class Video {
     required this.nSmallBannerUrl,
     this.nSubscriptionBannerUrl,
     required this.tagUrl,
-    this.subscriptions,
+    required this.adsForPaidMovie,
+    required this.adsPaidMovieCount,
+    required this.isIosFree,
+    required this.subscriptions,
+    this.daysdiff,
+    this.timediff,
     this.movieprices,
     required this.packages,
     required this.paymentGateways,
@@ -161,7 +170,12 @@ class Video {
   String nSmallBannerUrl;
   dynamic nSubscriptionBannerUrl;
   String tagUrl;
-  dynamic subscriptions;
+  String adsForPaidMovie;
+  String adsPaidMovieCount;
+  String isIosFree;
+  Subscriptions? subscriptions;
+  dynamic daysdiff;
+  dynamic timediff;
   dynamic movieprices;
   List<Package> packages;
   List<PaymentGateway> paymentGateways;
@@ -198,8 +212,8 @@ class Video {
         statusName: json["StatusName"],
         createdById: json["CreatedById"],
         modifiedById: json["ModifiedById"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        createdAt: (json["created_at"]),
+        updatedAt: (json["updated_at"]),
         deletedAt: json["deleted_at"],
         s1080JobId: json["s1080JobId"],
         s1080VideoUrl: json["s1080VideoUrl"],
@@ -231,7 +245,14 @@ class Video {
         nSmallBannerUrl: json["nSmallBannerUrl"],
         nSubscriptionBannerUrl: json["nSubscriptionBannerUrl"],
         tagUrl: json["tagUrl"],
-        subscriptions: json["subscriptions"],
+        adsForPaidMovie: json["ads_for_paid_movie"],
+        adsPaidMovieCount: json["ads_paid_movie_count"],
+        isIosFree: json["isIosFree"],
+        subscriptions: json["subscriptions"] == null
+            ? null
+            : Subscriptions.fromJson(json["subscriptions"]),
+        daysdiff: json["daysdiff"],
+        timediff: json["timediff"],
         movieprices: json["movieprices"],
         packages: List<Package>.from(
             json["packages"].map((x) => Package.fromJson(x))),
@@ -303,7 +324,12 @@ class Video {
         "nSmallBannerUrl": nSmallBannerUrl,
         "nSubscriptionBannerUrl": nSubscriptionBannerUrl,
         "tagUrl": tagUrl,
-        "subscriptions": subscriptions,
+        "ads_for_paid_movie": adsForPaidMovie,
+        "ads_paid_movie_count": adsPaidMovieCount,
+        "isIosFree": isIosFree,
+        "subscriptions": subscriptions?.toJson(),
+        "daysdiff": daysdiff,
+        "timediff": timediff,
         "movieprices": movieprices,
         "packages": List<dynamic>.from(packages.map((x) => x.toJson())),
         "payment_gateways":
@@ -416,8 +442,8 @@ class Package {
         statusName: json["StatusName"],
         createdById: json["CreatedById"],
         modifiedById: json["ModifiedById"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        createdAt: (json["created_at"]),
+        updatedAt: (json["updated_at"]),
         deletedAt: json["deleted_at"],
       );
 
@@ -478,8 +504,8 @@ class PaymentGateway {
         id: json["id"],
         pgName: json["PgName"],
         isActive: json["isActive"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        createdAt: (json["created_at"]),
+        updatedAt: (json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -487,6 +513,122 @@ class PaymentGateway {
         "PgName": pgName,
         "isActive": isActive,
         "created_at": createdAt.toString(),
-        "updated_at": updatedAt == null ? null : updatedAt.toString(),
+        "updated_at": updatedAt.toString(),
+      };
+}
+
+class Subscriptions {
+  Subscriptions({
+    required this.id,
+    required this.iUserId,
+    required this.sAmount,
+    required this.packageId,
+    required this.sType,
+    required this.iVideoId,
+    this.sTransId,
+    this.sRazorPayId,
+    this.sStatus,
+    this.sPaytmResponse,
+    this.sPaytmId,
+    this.sSeason,
+    required this.sSubscribedFrom,
+    this.comment,
+    this.statusId,
+    this.statusName,
+    this.createdById,
+    this.modifiedById,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.isActive,
+    this.deactivateReason,
+    this.deactivatedAt,
+    this.pgId,
+    this.paymentResponse,
+  });
+
+  int id;
+  int iUserId;
+  String sAmount;
+  String packageId;
+  String sType;
+  int iVideoId;
+  dynamic sTransId;
+  dynamic sRazorPayId;
+  dynamic sStatus;
+  dynamic sPaytmResponse;
+  dynamic sPaytmId;
+  dynamic sSeason;
+  String sSubscribedFrom;
+  dynamic comment;
+  dynamic statusId;
+  dynamic statusName;
+  dynamic createdById;
+  dynamic modifiedById;
+  String createdAt;
+  String updatedAt;
+  dynamic deletedAt;
+  String isActive;
+  dynamic deactivateReason;
+  dynamic deactivatedAt;
+  dynamic pgId;
+  dynamic paymentResponse;
+
+  factory Subscriptions.fromJson(Map<String, dynamic> json) => Subscriptions(
+        id: json["id"],
+        iUserId: json["iUserId"],
+        sAmount: json["sAmount"],
+        packageId: json["packageId"],
+        sType: json["sType"],
+        iVideoId: json["iVideoId"],
+        sTransId: json["sTransId"],
+        sRazorPayId: json["sRazorPayId"],
+        sStatus: json["sStatus"],
+        sPaytmResponse: json["sPaytmResponse"],
+        sPaytmId: json["sPaytmId"],
+        sSeason: json["sSeason"],
+        sSubscribedFrom: (json["sSubscribedFrom"]),
+        comment: json["comment"],
+        statusId: json["StatusId"],
+        statusName: json["StatusName"],
+        createdById: json["CreatedById"],
+        modifiedById: json["ModifiedById"],
+        createdAt: (json["created_at"]),
+        updatedAt: (json["updated_at"]),
+        deletedAt: json["deleted_at"],
+        isActive: json["isActive"],
+        deactivateReason: json["deactivateReason"],
+        deactivatedAt: json["deactivated_at"],
+        pgId: json["pg_id"],
+        paymentResponse: json["payment_response"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "iUserId": iUserId,
+        "sAmount": sAmount,
+        "packageId": packageId,
+        "sType": sType,
+        "iVideoId": iVideoId,
+        "sTransId": sTransId,
+        "sRazorPayId": sRazorPayId,
+        "sStatus": sStatus,
+        "sPaytmResponse": sPaytmResponse,
+        "sPaytmId": sPaytmId,
+        "sSeason": sSeason,
+        "sSubscribedFrom": sSubscribedFrom.toString(),
+        "comment": comment,
+        "StatusId": statusId,
+        "StatusName": statusName,
+        "CreatedById": createdById,
+        "ModifiedById": modifiedById,
+        "created_at": createdAt.toString(),
+        "updated_at": updatedAt.toString(),
+        "deleted_at": deletedAt,
+        "isActive": isActive,
+        "deactivateReason": deactivateReason,
+        "deactivated_at": deactivatedAt,
+        "pg_id": pgId,
+        "payment_response": paymentResponse,
       };
 }

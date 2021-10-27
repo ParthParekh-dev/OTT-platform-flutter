@@ -5,41 +5,70 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/models/addToWatchlistRespose.dart';
+import 'package:idragon_pro/models/editProfileResponse.dart';
 import 'package:idragon_pro/models/googleLoginResponse.dart';
 import 'package:idragon_pro/models/homePageResponse.dart';
 import 'package:idragon_pro/models/mobileLoginResponse.dart';
 import 'package:idragon_pro/models/promoResponse.dart';
 import 'package:idragon_pro/models/searchResponse.dart';
+import 'package:idragon_pro/models/userDetailsReponse.dart';
 import 'package:idragon_pro/models/videoDetailResponse.dart';
 import 'package:idragon_pro/models/watchListResponse.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:idragon_pro/screens/editProfileScreen.dart';
 
 class NetworkService {
-  Future<HomePageResponse?> fetchHomePage() async {
-    // var deviceInfo = DeviceInfoPlugin();
-    // late var model;
-    // if (Platform.isIOS) {
-    //   IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-    //   model = iosInfo.utsname.machine;
-    // } else {
-    //   AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    //   model = androidInfo.model;
-    // }
-    //
-    // http.Response response1 = await http.post(
-    //   Uri.encodeFull(
-    //       'https://idragonpro.com/idragon/api/v.08.2021/userinfobyid_new?id=${GetStorage().read(Constant().GOOGLE_ID)}&deviceId=$model&firebaseId=${GetStorage().read(Constant().FIREBASE_ID)}&versionCode=32'),
-    //   headers: <String, String>{
-    //     'Content-Type': 'application/json; charset=UTF-8',
-    //   },
-    // );
-    // print('/////////////////////' + response1.statusCode.toString());
-    // print(
-    //     'https://idragonpro.com/idragon/api/v.08.2021/userinfobyid_new?id=${GetStorage().read(Constant().GOOGLE_ID)}&deviceId=$model&firebaseId=${GetStorage().read(Constant().FIREBASE_ID)}&versionCode=32');
+  Future<UserDetailsResponse?> fetchUserDetails() async {
+    var deviceInfo = DeviceInfoPlugin();
+    late var model;
 
+    if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      model = iosInfo.utsname.machine;
+    } else {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      model = androidInfo.model;
+    }
+
+    http.Response response = await http.post(
+      Uri.encodeFull(
+          'https://idragonpro.com/idragon/api/v.08.2021/userinfobyid_new?id=${GetStorage().read(Constant().USER_ID)}&deviceId=${model.toString().replaceAll(' ', '')}&firebaseId=${GetStorage().read(Constant().FIREBASE_ID)}&versionCode=32'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return userDetailsResponseFromJson(jsonString);
+    } else {
+      //show error
+      return null;
+    }
+  }
+
+  Future<HomePageResponse?> fetchHomePage() async {
     http.Response response = await http.get(
       Uri.parse(
           'https://idragonpro.com/idragon/api/v.08.2021/get_home_banners?versionCode=32'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return homePageResponseFromJson(jsonString);
+    } else {
+      //show error
+      return null;
+    }
+  }
+
+  Future<HomePageResponse?> fetchWebSeries() async {
+    http.Response response = await http.get(
+      Uri.parse(
+          'https://idragonpro.com/idragon/api/v.08.2021/get_series_banners?versionCode=33'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -77,7 +106,7 @@ class NetworkService {
   Future<VideoDetailResponse?> fetchVideoDetails(String id) async {
     http.Response response = await http.post(
       Uri.parse(
-          'https://idragonpro.com/idragon/api/v.08.2021/getvideobyid_new?id=$id&versionCode=32'),
+          'https://idragonpro.com/idragon/api/v.08.2021/getvideobyid_new?id=$id&userid=${GetStorage().read(Constant().USER_ID)}&versionCode=32'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -160,6 +189,28 @@ class NetworkService {
       var jsonString = response.body;
 
       return mobileLoginResponseFromJson(jsonString);
+    } else {
+      //show error
+      return null;
+    }
+  }
+
+  Future<EditProfileResponse?> updateProfile(String fname, String lname) async {
+    http.Response response = await http.post(
+      Uri.encodeFull(
+          'https://idragonpro.com/idragon/api/v.08.2021/userupdatebyid?role_id=2&name=$fname&lastname=$lname&id=${GetStorage().read(Constant().USER_ID)}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var jsonString = response.body;
+
+      return editProfileResponseFromJson(jsonString);
     } else {
       //show error
       return null;

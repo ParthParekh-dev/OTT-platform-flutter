@@ -25,7 +25,7 @@ class ShowCategoryScreen extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   Get.to(() => VideoDetailScreen(
-                      category.banners![index].iVideoId.toString()));
+                      id: category.banners![index].iVideoId.toString()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

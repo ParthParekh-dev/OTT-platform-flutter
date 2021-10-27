@@ -90,7 +90,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               ? GestureDetector(
                                   onTap: () {
                                     Get.to(() => VideoDetailScreen(
-                                        searchController
+                                        id: searchController
                                             .searchResult.value[index].id
                                             .toString()));
                                   },
