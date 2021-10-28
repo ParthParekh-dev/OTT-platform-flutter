@@ -251,8 +251,8 @@ class Video {
         subscriptions: json["subscriptions"] == null
             ? null
             : Subscriptions.fromJson(json["subscriptions"]),
-        daysdiff: json["daysdiff"],
-        timediff: json["timediff"],
+        daysdiff: json["daysdiff"] == null ? -1 : json["daysdiff"],
+        timediff: json["timediff"] == null ? -1 : json["timediff"],
         movieprices: json["movieprices"],
         packages: List<Package>.from(
             json["packages"].map((x) => Package.fromJson(x))),

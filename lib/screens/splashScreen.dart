@@ -25,7 +25,9 @@ class _SplashState extends State<Splash> {
 
     if (iDragon_data.read(Constant().IS_GOOGLE_LOGIN) == null) {
       iDragon_data.write(Constant().IS_GOOGLE_LOGIN, false);
+      iDragon_data.write(Constant().IS_MOBILE_LOGIN, false);
     }
+    print(GetStorage().read(Constant().USER_ID));
     Get.off(() => PromoScreen());
   }
 

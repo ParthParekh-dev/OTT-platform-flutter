@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/screens/languageScreen.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -72,14 +75,10 @@ class _SettingScreenState extends State<SettingScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Movies Subscription'.tr,
-                    style: TextStyle(fontSize: 16),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width,
                       height: 45,
                       decoration: BoxDecoration(
                         boxShadow: [
@@ -115,70 +114,17 @@ class _SettingScreenState extends State<SettingScreen> {
                           shadowColor:
                               MaterialStateProperty.all(Colors.transparent),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          var url =
+                              'https://idragonpro.com/idragon/web_razor_payment_form/${GetStorage().read(Constant().USER_ID)}';
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
                         child: Text(
-                          'no_active_subscription'.tr,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Divider(
-                      thickness: 2,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    'WebSeries Subscription',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black26,
-                              offset: Offset(0, 4),
-                              blurRadius: 5.0),
-                        ],
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          stops: [0.0, 1.0],
-                          colors: [
-                            Color(0xFFED0205),
-                            // Color(0xFFFF8F45),
-                            Color(0xFFFE8F54),
-                          ],
-                        ),
-                        color: Colors.deepPurple.shade300,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                          // elevation: MaterialStateProperty.all(3),
-                          shadowColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                        ),
-                        onPressed: () {},
-                        child: Text(
-                          'no_active_subscription'.tr,
+                          'Account Settings',
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.white,

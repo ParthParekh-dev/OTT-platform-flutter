@@ -161,10 +161,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       top: 60.0, right: 20.0),
                                   child: GestureDetector(
                                     onTap: () {
-                                      Get.to(() => WebSeriesScreen());
-                                      // Get.defaultDialog(
-                                      //     title: 'Web series coming Soon!',
-                                      //     middleText: 'Stay tuned');
+                                      // Get.to(() => WebSeriesScreen());
+                                      Get.defaultDialog(
+                                          title: 'Web series coming Soon!',
+                                          middleText: 'Stay tuned');
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,

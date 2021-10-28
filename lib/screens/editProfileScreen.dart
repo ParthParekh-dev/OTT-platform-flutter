@@ -14,11 +14,25 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final iDragon_data = GetStorage();
   final LoginController loginController = Get.put(LoginController());
-  final fNameController = TextEditingController();
-  final lNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    var fNameController;
+    var lNameController;
+    try {
+      fNameController = TextEditingController(
+          text: (GetStorage().read(Constant().GOOGLE_NAME))
+              .toString()
+              .split(' ')[0]);
+
+      lNameController = TextEditingController(
+          text: (GetStorage().read(Constant().GOOGLE_NAME))
+              .toString()
+              .split(' ')[1]);
+    } catch (erp) {
+      lNameController = TextEditingController();
+    }
+
     return SafeArea(
       child: Scaffold(
         body: Stack(

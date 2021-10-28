@@ -107,8 +107,13 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                                 iDragon_data.read(Constant().GOOGLE_NAME);
                             String email =
                                 iDragon_data.read(Constant().GOOGLE_EMAIL);
-                            loginController.mobileLogin(id, myController.text,
-                                name, email, argumentData[0].toString());
+                            try {
+                              loginController.mobileLogin(id, myController.text,
+                                  name, email, argumentData[0].toString());
+                            } catch (exc) {
+                              loginController.mobileLogin(
+                                  id, myController.text, name, email, "308");
+                            }
                           }),
                     ),
                     Obx(() => (loginController.isLoading.value)

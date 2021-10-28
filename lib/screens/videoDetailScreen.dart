@@ -12,6 +12,7 @@ import 'package:idragon_pro/screens/mobileLoginScreen.dart';
 import 'package:idragon_pro/widgets/descriptionText.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VideoDetailScreen extends StatelessWidget {
   late BetterPlayerController _betterPlayerController;
@@ -224,7 +225,7 @@ class VideoDetailScreen extends StatelessWidget {
                             RoundCornerButton(
                                 buttonText: 'play'.tr,
                                 width: MediaQuery.of(context).size.width * 0.4,
-                                onpressed: () {
+                                onpressed: () async {
                                   var videoDetail =
                                       videoDetailController.videoDetails.value!;
                                   if (videoDetail.comingSoon == "Yes") {
@@ -232,22 +233,40 @@ class VideoDetailScreen extends StatelessWidget {
                                         title: 'coming_soon'.tr,
                                         middleText: 'Stay tuned');
                                   } else if (videoDetail.isFree == "Yes") {
+                                    print('//////////free');
+                                    activateVideoPlayer(
+                                        videoUrl: videoDetail.videoUrl);
+                                  } else if (videoDetail.isIosFree == "1") {
+                                    print('//////////IoS');
+                                    activateVideoPlayer(
+                                        videoUrl: videoDetail.videoUrl);
+                                  } else if (GetStorage()
+                                      .read(Constant().IS_MOVIE_SUBS)) {
+                                    print('//////////movieSub');
                                     activateVideoPlayer(
                                         videoUrl: videoDetail.videoUrl);
                                   } else if (videoDetail.sAllowedInPackage ==
-                                      "1") {
-                                    if (videoDetail.daysdiff > 0 ||
-                                        videoDetail.timediff > 0) {
-                                      activateVideoPlayer(
-                                          videoUrl: videoDetail.videoUrl);
-                                    }
-                                  } else if (GetStorage()
-                                      .read(Constant().IS_MOVIE_SUBS)) {
+                                          "1" ||
+                                      videoDetail.daysdiff > 0 ||
+                                      videoDetail.timediff > 0) {
+                                    print('//////////package');
                                     activateVideoPlayer(
                                         videoUrl: videoDetail.videoUrl);
                                   } else {
-                                    Get.to(() => MobileLoginScreen(),
-                                        arguments: [videoDetail.id]);
+                                    if (GetStorage()
+                                        .read(Constant().IS_MOBILE_LOGIN)) {
+                                      var url =
+                                          'https://idragonpro.com/idragon/web_razor_payment_form/${GetStorage().read(Constant().USER_ID)}/' +
+                                              videoDetail.id.toString();
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    } else {
+                                      Get.to(() => MobileLoginScreen(),
+                                          arguments: [videoDetail.id]);
+                                    }
                                   }
                                 })
                           ],

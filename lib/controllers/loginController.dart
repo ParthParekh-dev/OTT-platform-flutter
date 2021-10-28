@@ -39,6 +39,7 @@ class LoginController extends GetxController {
 
       if (result != null) {
         print(result.user.id.toString());
+        GetStorage().write(Constant().IS_MOBILE_LOGIN, true);
         var url =
             'https://idragonpro.com/idragon/web_razor_payment_form/${GetStorage().read(Constant().USER_ID)}/$videoId';
         if (await canLaunch(url)) {
