@@ -9,6 +9,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/videoDetailController.dart';
 import 'package:idragon_pro/screens/mobileLoginScreen.dart';
+import 'package:idragon_pro/screens/settingScreen.dart';
 import 'package:idragon_pro/widgets/descriptionText.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:share_plus/share_plus.dart';
@@ -246,23 +247,17 @@ class VideoDetailScreen extends StatelessWidget {
                                     activateVideoPlayer(
                                         videoUrl: videoDetail.videoUrl);
                                   } else if (videoDetail.sAllowedInPackage ==
-                                          "1" ||
-                                      videoDetail.daysdiff > 0 ||
-                                      videoDetail.timediff > 0) {
+                                          "1" &&
+                                      (videoDetail.daysdiff > 0 ||
+                                          videoDetail.timediff > 0)) {
                                     print('//////////package');
                                     activateVideoPlayer(
                                         videoUrl: videoDetail.videoUrl);
                                   } else {
                                     if (GetStorage()
                                         .read(Constant().IS_MOBILE_LOGIN)) {
-                                      var url =
-                                          'https://idragonpro.com/idragon/web_razor_payment_form/${GetStorage().read(Constant().USER_ID)}/' +
-                                              videoDetail.id.toString();
-                                      if (await canLaunch(url)) {
-                                        await launch(url);
-                                      } else {
-                                        throw 'Could not launch $url';
-                                      }
+                                      Get.offAll(() => SettingScreen(),
+                                          arguments: [1, videoDetail.id]);
                                     } else {
                                       Get.to(() => MobileLoginScreen(),
                                           arguments: [videoDetail.id]);
@@ -304,7 +299,7 @@ class VideoDetailScreen extends StatelessWidget {
                                 GestureDetector(
                                   onTap: () {
                                     Share.share(
-                                        'Hey I’m watching ${videoDetailController.videoDetails.value!.name}. Check it out now on iDragon New Movies App\nhttps://idragonpro.com/info.php?play=393');
+                                        'Hey I’m watching ${videoDetailController.videoDetails.value!.name}. Check it out now on iDragon New Movies App\nhttps://idragonpro.com');
                                   },
                                   child: Icon(
                                     Icons.share,

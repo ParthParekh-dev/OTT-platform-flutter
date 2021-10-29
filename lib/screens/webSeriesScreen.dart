@@ -133,7 +133,7 @@ class _WebSeriesScreenState extends State<WebSeriesScreen> {
                                                     GestureDetector(
                                                       onTap: () {
                                                         Share.share(
-                                                            'Hey I’m watching ${banner.videodetails.name}. Check it out now on iDragon New Movies App\nhttps://idragonpro.com/info.php?play=393');
+                                                            'Hey I’m watching ${banner.videodetails.name}. Check it out now on iDragon New Movies App\nhttps://idragonpro.com');
                                                       },
                                                       child: Icon(
                                                         Icons.share,

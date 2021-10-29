@@ -63,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               horizontal: 15.0, vertical: 5.0),
                           child: IconButton(
                             onPressed: () {
-                              Get.to(() => SettingScreen());
+                              Get.to(() => SettingScreen(),arguments:[0]);
                             },
                             icon: Icon(
                               Icons.settings,

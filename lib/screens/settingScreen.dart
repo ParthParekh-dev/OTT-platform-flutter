@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:idragon_pro/constants.dart';
+import 'package:idragon_pro/controllers/settingController.dart';
 import 'package:idragon_pro/screens/languageScreen.dart';
-import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({Key? key}) : super(key: key);
+  SettingScreen({Key? key}) : super(key: key);
+
+  var status = Get.arguments;
 
   @override
   _SettingScreenState createState() => _SettingScreenState();
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  final SettingController settingController = Get.put(SettingController());
+
   bool isSwitched = false;
   var textValue = 'Switch is OFF';
 
@@ -33,8 +37,23 @@ class _SettingScreenState extends State<SettingScreen> {
     }
   }
 
+  Future<void> checkDeroute() async {
+    if (widget.status[0] == 1) {
+      var url =
+          'https://idragonpro.com/idragon/web_razor_payment_form/${GetStorage().read(Constant().USER_ID)}/' +
+              widget.status[1].toString();
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    checkDeroute();
+
     return SafeArea(
       child: Scaffold(
         body: ListView(
@@ -115,20 +134,18 @@ class _SettingScreenState extends State<SettingScreen> {
                               MaterialStateProperty.all(Colors.transparent),
                         ),
                         onPressed: () async {
-                          var url =
-                              'https://idragonpro.com/idragon/web_razor_payment_form/${GetStorage().read(Constant().USER_ID)}';
-                          if (await canLaunch(url)) {
-                            await launch(url);
-                          } else {
-                            throw 'Could not launch $url';
-                          }
+                          settingController.generateHash();
                         },
-                        child: Text(
-                          'Account Settings',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                          ),
+                        child: Obx(
+                          () => (settingController.isLoading.value)
+                              ? (CircularProgressIndicator())
+                              : Text(
+                                  'Account Settings',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ),

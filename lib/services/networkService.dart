@@ -7,6 +7,7 @@ import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/models/addToWatchlistRespose.dart';
 import 'package:idragon_pro/models/editProfileResponse.dart';
 import 'package:idragon_pro/models/googleLoginResponse.dart';
+import 'package:idragon_pro/models/hashResponse.dart';
 import 'package:idragon_pro/models/homePageResponse.dart';
 import 'package:idragon_pro/models/mobileLoginResponse.dart';
 import 'package:idragon_pro/models/promoResponse.dart';
@@ -255,6 +256,24 @@ class NetworkService {
     if (response.statusCode == 200) {
       var jsonString = response.body;
       return watchlistResponseFromJson(jsonString);
+    } else {
+      //show error
+      return null;
+    }
+  }
+
+  Future<HashResponse?> generateHash() async {
+    http.Response response = await http.post(
+      Uri.parse(
+          'https://idragonpro.com/idragon/api/v.08.2021/generate_userId_hash?iUserId=${GetStorage().read(Constant().USER_ID)}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return hashResponseFromJson(jsonString);
     } else {
       //show error
       return null;
