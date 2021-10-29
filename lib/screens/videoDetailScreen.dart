@@ -13,7 +13,6 @@ import 'package:idragon_pro/screens/settingScreen.dart';
 import 'package:idragon_pro/widgets/descriptionText.dart';
 import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class VideoDetailScreen extends StatelessWidget {
   late BetterPlayerController _betterPlayerController;
@@ -229,40 +228,114 @@ class VideoDetailScreen extends StatelessWidget {
                                 onpressed: () async {
                                   var videoDetail =
                                       videoDetailController.videoDetails.value!;
+
                                   if (videoDetail.comingSoon == "Yes") {
                                     Get.defaultDialog(
                                         title: 'coming_soon'.tr,
                                         middleText: 'Stay tuned');
-                                  } else if (videoDetail.isFree == "Yes") {
-                                    print('//////////free');
-                                    activateVideoPlayer(
-                                        videoUrl: videoDetail.videoUrl);
-                                  } else if (videoDetail.isIosFree == "1") {
-                                    print('//////////IoS');
-                                    activateVideoPlayer(
-                                        videoUrl: videoDetail.videoUrl);
-                                  } else if (GetStorage()
-                                      .read(Constant().IS_MOVIE_SUBS)) {
-                                    print('//////////movieSub');
-                                    activateVideoPlayer(
-                                        videoUrl: videoDetail.videoUrl);
-                                  } else if (videoDetail.sAllowedInPackage ==
-                                          "1" &&
-                                      (videoDetail.daysdiff > 0 ||
-                                          videoDetail.timediff > 0)) {
-                                    print('//////////package');
+                                  } else if (videoDetail.isFree == "Yes" ||
+                                      videoDetail.isIosFree == "1") {
                                     activateVideoPlayer(
                                         videoUrl: videoDetail.videoUrl);
                                   } else {
-                                    if (GetStorage()
-                                        .read(Constant().IS_MOBILE_LOGIN)) {
-                                      Get.offAll(() => SettingScreen(),
-                                          arguments: [1, videoDetail.id]);
+                                    if (videoDetail.sAllowedInPackage == "0") {
+                                      if (GetStorage()
+                                          .read(Constant().IS_MOVIE_SUBS)) {
+                                        activateVideoPlayer(
+                                            videoUrl: videoDetail.videoUrl);
+                                      } else if (videoDetail.subscriptions !=
+                                              null &&
+                                          videoDetail.daysdiff != null &&
+                                          videoDetail.timediff != null) {
+                                        if ((videoDetail.daysdiff > 0 ||
+                                            videoDetail.timediff > 0)) {
+                                          activateVideoPlayer(
+                                              videoUrl: videoDetail.videoUrl);
+                                        } else {
+                                          if (GetStorage().read(
+                                              Constant().IS_MOBILE_LOGIN)) {
+                                            Get.offAll(() => SettingScreen(),
+                                                arguments: [1, videoDetail.id]);
+                                          } else {
+                                            Get.to(() => MobileLoginScreen(),
+                                                arguments: [videoDetail.id]);
+                                          }
+                                        }
+                                      } else {
+                                        if (GetStorage()
+                                            .read(Constant().IS_MOBILE_LOGIN)) {
+                                          Get.offAll(() => SettingScreen(),
+                                              arguments: [1, videoDetail.id]);
+                                        } else {
+                                          Get.to(() => MobileLoginScreen(),
+                                              arguments: [videoDetail.id]);
+                                        }
+                                      }
                                     } else {
-                                      Get.to(() => MobileLoginScreen(),
-                                          arguments: [videoDetail.id]);
+                                      if (videoDetail.subscriptions != null &&
+                                          videoDetail.daysdiff != null &&
+                                          videoDetail.timediff != null) {
+                                        if ((videoDetail.daysdiff > 0 ||
+                                            videoDetail.timediff > 0)) {
+                                          activateVideoPlayer(
+                                              videoUrl: videoDetail.videoUrl);
+                                        } else {
+                                          if (GetStorage().read(
+                                              Constant().IS_MOBILE_LOGIN)) {
+                                            Get.offAll(() => SettingScreen(),
+                                                arguments: [1, videoDetail.id]);
+                                          } else {
+                                            Get.to(() => MobileLoginScreen(),
+                                                arguments: [videoDetail.id]);
+                                          }
+                                        }
+                                      } else {
+                                        if (GetStorage()
+                                            .read(Constant().IS_MOBILE_LOGIN)) {
+                                          Get.offAll(() => SettingScreen(),
+                                              arguments: [1, videoDetail.id]);
+                                        } else {
+                                          Get.to(() => MobileLoginScreen(),
+                                              arguments: [videoDetail.id]);
+                                        }
+                                      }
                                     }
                                   }
+
+                                  // if (videoDetail.comingSoon == "Yes") {
+                                  //   Get.defaultDialog(
+                                  //       title: 'coming_soon'.tr,
+                                  //       middleText: 'Stay tuned');
+                                  // } else if (videoDetail.isFree == "Yes") {
+                                  //   print('//////////free');
+                                  //   activateVideoPlayer(
+                                  //       videoUrl: videoDetail.videoUrl);
+                                  // } else if (videoDetail.isIosFree == "1") {
+                                  //   print('//////////IoS');
+                                  //   activateVideoPlayer(
+                                  //       videoUrl: videoDetail.videoUrl);
+                                  // } else if (GetStorage()
+                                  //     .read(Constant().IS_MOVIE_SUBS)) {
+                                  //   print('//////////movieSub');
+                                  //   activateVideoPlayer(
+                                  //       videoUrl: videoDetail.videoUrl);
+                                  // } else if (videoDetail.sAllowedInPackage ==
+                                  //         "1" &&
+                                  //     (videoDetail.daysdiff > 0 ||
+                                  //         videoDetail.timediff > 0)) {
+                                  //   print('//////////package');
+                                  //   activateVideoPlayer(
+                                  //       videoUrl: videoDetail.videoUrl);
+                                  // } else {
+                                  //   if (GetStorage()
+                                  //       .read(Constant().IS_MOBILE_LOGIN)) {
+                                  //     Get.offAll(() => SettingScreen(),
+                                  //         arguments: [1, videoDetail.id]);
+                                  //   } else {
+                                  //     Get.to(() => MobileLoginScreen(),
+                                  //         arguments: [videoDetail.id]);
+                                  //   }
+                                  // }
                                 })
                           ],
                         ),

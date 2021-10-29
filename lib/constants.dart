@@ -6,6 +6,7 @@ class Constant {
   final String GOOGLE_EMAIL = "googleEmail";
   final String GOOGLE_PROFILE = "googleProfile";
   final String USER_ID = "userId";
+  final String USER_MOBILE = "userMobile";
   final String FIREBASE_ID = "firebaseId";
   final String IS_MOBILE_LOGIN = "isMobileLogin";
   final String IS_MOVIE_SUBS = "isMovieSubs";

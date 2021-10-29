@@ -48,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 15.0),
                           child: IconButton(
                             onPressed: () {
-                              Get.back();
+                              Get.offAll(() => HomeScreen());
                             },
                             icon: Icon(
                               Icons.arrow_back,
@@ -63,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               horizontal: 15.0, vertical: 5.0),
                           child: IconButton(
                             onPressed: () {
-                              Get.to(() => SettingScreen(),arguments:[0]);
+                              Get.to(() => SettingScreen(), arguments: [0]);
                             },
                             icon: Icon(
                               Icons.settings,
@@ -100,61 +100,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Get.to(() => EditProfileScreen());
                       },
                       imagePath: 'assets/editIcon.png'),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(() => MobileLoginScreen());
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Container(
-                          height: 100,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              // stops: [0.0, 1.0],
-                              colors: [
-                                Color(0xFFD39C25),
-                                Color(0xFFFBE254),
-                                Color(0xFFD39C25),
-                              ],
-                            ),
-                          ),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                                    child: Image.asset(
-                                      'assets/vipLogo.png',
-                                      width: 80,
-                                    ),
+                  (GetStorage().read(Constant().IS_MOBILE_LOGIN))
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.to(() => MobileLoginScreen());
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30.0),
+                              child: Container(
+                                height: 100,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                    // stops: [0.0, 1.0],
+                                    colors: [
+                                      Color(0xFFD39C25),
+                                      Color(0xFFFBE254),
+                                      Color(0xFFD39C25),
+                                    ],
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      'click_here_to_vip_login'.tr,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                )
-                              ]),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(8, 8, 8, 8),
+                                          child: Image.asset(
+                                            'assets/vipLogo.png',
+                                            width: 80,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'click_here_to_vip_login'.tr,
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40.0),
                     child: RoundCornerButton(

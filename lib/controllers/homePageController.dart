@@ -26,13 +26,27 @@ class HomePageController extends GetxController {
       if (result != null) {
         if (result.status == true) {
           userDetails.value = result.user;
-          if (result.user.daysdiff > 0 || result.user.timediff > 0) {
-            GetStorage().write(Constant().IS_MOVIE_SUBS, true);
+          print(userDetailsResponseToJson(result));
+
+          if (result.user.subscriptions != null &&
+              result.user.timediff != null &&
+              result.user.daysdiff != null) {
+            if ((result.user.daysdiff > 0 || result.user.timediff > 0)) {
+              GetStorage().write(Constant().IS_MOVIE_SUBS, true);
+            } else {
+              GetStorage().write(Constant().IS_MOVIE_SUBS, false);
+            }
           } else {
             GetStorage().write(Constant().IS_MOVIE_SUBS, false);
           }
-          if (result.user.daysdiffWeb > 0 || result.user.timediffWeb > 0) {
-            GetStorage().write(Constant().IS_WEB_SUBS, true);
+          if (result.user.subscriptionsWeb != null &&
+              result.user.timediffWeb != null &&
+              result.user.daysdiffWeb != null) {
+            if ((result.user.daysdiffWeb > 0 || result.user.timediffWeb > 0)) {
+              GetStorage().write(Constant().IS_WEB_SUBS, true);
+            } else {
+              GetStorage().write(Constant().IS_WEB_SUBS, false);
+            }
           } else {
             GetStorage().write(Constant().IS_WEB_SUBS, false);
           }

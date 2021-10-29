@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/settingController.dart';
+import 'package:idragon_pro/screens/homeScreen.dart';
 import 'package:idragon_pro/screens/languageScreen.dart';
+import 'package:idragon_pro/screens/profileScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -67,7 +69,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: IconButton(
                       onPressed: () {
-                        Get.back();
+                        Get.offAll(() => HomeScreen());
                       },
                       icon: Icon(
                         Icons.arrow_back,

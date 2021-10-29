@@ -39,97 +39,135 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           children: [
             Container(
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                child: ListView(
                   children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.08,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 15.0),
-                            child: IconButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              icon: Icon(
-                                Icons.arrow_back,
-                                color: Colors.white,
-                                size: 40,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  icon: Icon(
+                                    Icons.arrow_back,
+                                    color: Colors.white,
+                                    size: 40,
+                                  ),
+                                ),
                               ),
+                              Image.asset('assets/logo.png'),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 5.0),
+                                child: Icon(
+                                  Icons.settings,
+                                  color: Colors.black,
+                                  size: 40,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                            'update'.tr,
+                            style: TextStyle(
+                                color: Color(0xFFFFC737),
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: TextField(
+                            textCapitalization: TextCapitalization.sentences,
+                            controller: fNameController,
+                            onChanged: (value) {
+                              print(fNameController.text);
+                            },
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: 'Enter first name',
                             ),
                           ),
-                          Image.asset('assets/logo.png'),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0, vertical: 5.0),
-                            child: Icon(
-                              Icons.settings,
-                              color: Colors.black,
-                              size: 40,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 10.0),
+                          child: TextField(
+                            textCapitalization: TextCapitalization.sentences,
+                            controller: lNameController,
+                            onChanged: (value) {
+                              print(lNameController.text);
+                            },
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: 'Enter last name',
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text(
-                        'edit'.tr,
-                        style: TextStyle(
-                            color: Color(0xFFFFC737),
-                            fontSize: 25,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: TextField(
-                        textCapitalization: TextCapitalization.sentences,
-                        controller: fNameController,
-                        onChanged: (value) {
-                          print(fNameController.text);
-                        },
-                        keyboardType: TextInputType.name,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Enter first name',
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 10.0),
-                      child: TextField(
-                        textCapitalization: TextCapitalization.sentences,
-                        controller: lNameController,
-                        onChanged: (value) {
-                          print(lNameController.text);
-                        },
-                        keyboardType: TextInputType.name,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Enter last name',
+                        (!GetStorage().read(Constant().IS_MOBILE_LOGIN))
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 10.0),
+                                child: TextField(
+                                  enableInteractiveSelection: false,
+                                  readOnly: true,
+                                  controller: TextEditingController(
+                                      text: GetStorage()
+                                          .read(Constant().USER_MOBILE)),
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                  ),
+                                ),
+                              ),
+                        (!GetStorage().read(Constant().IS_MOBILE_LOGIN))
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 10.0),
+                                child: TextField(
+                                  readOnly: true,
+                                  enableInteractiveSelection: false,
+                                  controller: TextEditingController(
+                                      text: GetStorage()
+                                          .read(Constant().GOOGLE_EMAIL)),
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                  ),
+                                ),
+                              ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 40.0),
+                          child: RoundCornerButton(
+                              buttonText: 'update'.tr,
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              onpressed: () {
+                                loginController.updateProfile(
+                                    fNameController.text, lNameController.text);
+                              }),
                         ),
-                      ),
+                        Obx(() => (loginController.isLoading.value)
+                            ? Center(child: (CircularProgressIndicator()))
+                            : Container()),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 40.0),
-                      child: RoundCornerButton(
-                          buttonText: 'Save',
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          onpressed: () {
-                            loginController.updateProfile(
-                                fNameController.text, lNameController.text);
-                          }),
-                    ),
-                    Obx(() => (loginController.isLoading.value)
-                        ? Center(child: (CircularProgressIndicator()))
-                        : Container()),
                   ],
                 ),
               ),
