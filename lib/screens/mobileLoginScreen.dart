@@ -112,7 +112,7 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                                   name, email, argumentData[0].toString());
                             } catch (exc) {
                               loginController.mobileLogin(
-                                  id, myController.text, name, email, "308");
+                                  id, myController.text, name, email, "000");
                             }
                           }),
                     ),

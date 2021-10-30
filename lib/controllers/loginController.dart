@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:idragon_pro/constants.dart';
+import 'package:idragon_pro/screens/homeScreen.dart';
 import 'package:idragon_pro/screens/languageScreen.dart';
 import 'package:idragon_pro/screens/profileScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -41,12 +42,17 @@ class LoginController extends GetxController {
         print(result.user.id.toString());
         GetStorage().write(Constant().IS_MOBILE_LOGIN, true);
         GetStorage().write(Constant().USER_MOBILE, mobile);
-        var url =
-            'https://idragonpro.com/idragon/web_razor_payment_form/${GetStorage().read(Constant().USER_ID)}/$videoId';
-        if (await canLaunch(url)) {
-          await launch(url);
+
+        if (videoId != "000") {
+          var url =
+              'https://idragonpro.com/idragon/web_razor_payment_form/${GetStorage().read(Constant().USER_ID)}/$videoId';
+          if (await canLaunch(url)) {
+            await launch(url);
+          } else {
+            throw 'Could not launch $url';
+          }
         } else {
-          throw 'Could not launch $url';
+          Get.offAll(HomeScreen());
         }
       } else {
         Get.snackbar("Please enter valid phone number", "Something went wrong",
