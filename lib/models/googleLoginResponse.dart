@@ -68,7 +68,7 @@ class User {
   dynamic remdaysweb;
   DateTime? createdAt;
   DateTime? updatedAt;
-  int roleId;
+  dynamic roleId;
   String deviceId1;
   dynamic deviceId2;
   String firebaseId1;
