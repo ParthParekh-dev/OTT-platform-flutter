@@ -237,6 +237,8 @@ class NetworkService {
     if (response.statusCode == 200 || response.statusCode == 201) {
       var jsonString = response.body;
 
+      print(jsonString);
+
       return googleLoginResponseFromJson(jsonString);
     } else {
       //show error

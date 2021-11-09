@@ -15,6 +15,73 @@ import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:share_plus/share_plus.dart';
 
 class VideoDetailScreen extends StatelessWidget {
+  List<String> Saarc = ["IN", "BT", "LK", "NP", "PK", "BD", "MV"];
+  List<String> Europe = [
+    'AL',
+    'AD',
+    'AT',
+    'AZ',
+    'BY',
+    'BE',
+    'BA',
+    'BG',
+    'HR',
+    'CZ',
+    'DK',
+    'EE',
+    'FI',
+    'FR',
+    'GE',
+    'DE',
+    'GR',
+    'HU',
+    'IS',
+    'IE',
+    'IT',
+    'KZ',
+    'LV',
+    'LI',
+    'LT',
+    'LU',
+    'MT',
+    'MC',
+    'ME',
+    'NL',
+    'MK',
+    'NO',
+    'PL',
+    'PT',
+    'RO',
+    'SM',
+    'RS',
+    'SK',
+    'SI',
+    'ES',
+    'SE',
+    'CH',
+    'TR',
+    'UA',
+    'GB'
+  ];
+
+  List<String> SE = [
+    'BN',
+    'KH',
+    'HK',
+    'ID',
+    'JP',
+    'LA',
+    'MO',
+    'MY',
+    'MM',
+    'PH',
+    'SG',
+    'TW',
+    'TH',
+    'TL',
+    'VN'
+  ];
+
   late BetterPlayerController _betterPlayerController;
 
   final VideoDetailController videoDetailController =
@@ -30,6 +97,11 @@ class VideoDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> activateVideoPlayer({required String videoUrl}) async {
       String? platformVersion;
+      if (videoUrl.contains('.mp4')) {
+        videoDetailController.isTrailer.value = true;
+        print(videoUrl);
+      }
+      print(videoUrl);
 
       try {
         platformVersion = await FlutterSimCountryCode.simCountryCode;
@@ -37,7 +109,32 @@ class VideoDetailScreen extends StatelessWidget {
         platformVersion = 'Failed to get platform version.';
       }
 
-      print(platformVersion);
+      print('Platform version $platformVersion');
+      print(videoDetailController.videoDetails.value!.geographicalArea);
+      if (videoDetailController.videoDetails.value!.geographicalArea[0] ==
+          "Worlwide") {
+        videoDetailController.isBlocked.value = false;
+      } else if (videoDetailController
+                  .videoDetails.value!.geographicalArea.length ==
+              7 &&
+          Saarc.contains(platformVersion)) {
+        videoDetailController.isBlocked.value = false;
+        print('Accepted');
+      } else if (videoDetailController
+                  .videoDetails.value!.geographicalArea.length ==
+              48 &&
+          Europe.contains(platformVersion)) {
+        videoDetailController.isBlocked.value = false;
+        print('Europe');
+      } else if (videoDetailController
+                  .videoDetails.value!.geographicalArea.length ==
+              15 &&
+          SE.contains(platformVersion)) {
+        videoDetailController.isBlocked.value = true;
+        print('SE');
+      } else {
+        videoDetailController.isBlocked.value = false;
+      }
 
       try {
         _betterPlayerController.pause();
@@ -45,69 +142,74 @@ class VideoDetailScreen extends StatelessWidget {
         print(e);
       }
 
-      videoDetailController.videoPlayerReady.value = false;
-      BetterPlayerControlsConfiguration controlsConfiguration =
-          BetterPlayerControlsConfiguration(
-        controlBarColor: Colors.black26,
-        iconsColor: Colors.white,
-        playIcon: Icons.play_arrow_outlined,
-        progressBarPlayedColor: Colors.indigo,
-        progressBarHandleColor: Colors.indigo,
-        skipBackIcon: Icons.replay_10_outlined,
-        skipForwardIcon: Icons.forward_10_outlined,
-        overflowMenuIcon: Icons.settings,
-        backwardSkipTimeInMilliseconds: 10000,
-        forwardSkipTimeInMilliseconds: 10000,
-        playerTheme: BetterPlayerTheme.material,
-        enableSkips: true,
-        enableFullscreen: true,
-        enablePip: true,
-        enablePlayPause: true,
-        enableMute: true,
-        enableAudioTracks: true,
-        enableProgressText: true,
-        enableSubtitles: false,
-        showControlsOnInitialize: true,
-        enablePlaybackSpeed: true,
-        loadingColor: Colors.red,
-        overflowModalColor: Colors.black54,
-        overflowModalTextColor: Colors.white,
-        overflowMenuIconsColor: Colors.white,
-      );
+      if (videoDetailController.isBlocked.value) {
+        Get.snackbar('Sorry', 'Can\'t play this video in your country');
+      } else {
+        videoDetailController.videoPlayerReady.value = false;
+        BetterPlayerControlsConfiguration controlsConfiguration =
+            BetterPlayerControlsConfiguration(
+          controlBarColor: Colors.black26,
+          iconsColor: Colors.white,
+          playIcon: Icons.play_arrow_outlined,
+          progressBarPlayedColor: Colors.indigo,
+          progressBarHandleColor: Colors.indigo,
+          skipBackIcon: Icons.replay_10_outlined,
+          skipForwardIcon: Icons.forward_10_outlined,
+          overflowMenuIcon: Icons.settings,
+          backwardSkipTimeInMilliseconds: 10000,
+          forwardSkipTimeInMilliseconds: 10000,
+          playerTheme: BetterPlayerTheme.material,
+          enableSkips: true,
+          enableFullscreen: true,
+          enablePip: true,
+          enablePlayPause: true,
+          enableMute: true,
+          enableAudioTracks: true,
+          enableProgressText: true,
+          enableSubtitles: false,
+          showControlsOnInitialize: true,
+          enablePlaybackSpeed: true,
+          loadingColor: Colors.red,
+          overflowModalColor: Colors.black54,
+          overflowModalTextColor: Colors.white,
+          overflowMenuIconsColor: Colors.white,
+        );
 
-      BetterPlayerConfiguration betterPlayerConfiguration =
-          BetterPlayerConfiguration(
-              autoPlay: true,
-              fullScreenByDefault: false,
-              fullScreenAspectRatio: MediaQuery.of(context).size.width /
-                  MediaQuery.of(context).size.height,
-              deviceOrientationsOnFullScreen: [
-                DeviceOrientation.landscapeLeft,
-                DeviceOrientation.landscapeRight
-              ],
-              autoDetectFullscreenDeviceOrientation: false,
-              deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
-              controlsConfiguration: controlsConfiguration,
-              allowedScreenSleep: false,
-              fit: BoxFit.cover);
+        BetterPlayerConfiguration betterPlayerConfiguration =
+            BetterPlayerConfiguration(
+                autoPlay: true,
+                fullScreenByDefault: false,
+                fullScreenAspectRatio: MediaQuery.of(context).size.width /
+                    MediaQuery.of(context).size.height,
+                deviceOrientationsOnFullScreen: [
+                  DeviceOrientation.landscapeLeft,
+                  DeviceOrientation.landscapeRight
+                ],
+                autoDetectFullscreenDeviceOrientation: false,
+                deviceOrientationsAfterFullScreen: [
+                  DeviceOrientation.portraitUp
+                ],
+                controlsConfiguration: controlsConfiguration,
+                allowedScreenSleep: false,
+                fit: BoxFit.cover);
 
-      BetterPlayerDataSource dataSource = BetterPlayerDataSource(
-        BetterPlayerDataSourceType.network,
-        videoUrl,
-        videoFormat: (videoDetailController.isTrailer.value)
-            ? null
-            : BetterPlayerVideoFormat.hls,
-        cacheConfiguration: const BetterPlayerCacheConfiguration(
-          useCache: true,
-          maxCacheFileSize: 100 * 1024 * 1024,
-          maxCacheSize: 1000 * 1024 * 1024,
-        ),
-      );
+        BetterPlayerDataSource dataSource = BetterPlayerDataSource(
+          BetterPlayerDataSourceType.network,
+          videoUrl,
+          videoFormat:
+              (videoUrl.contains('.mp4')) ? null : BetterPlayerVideoFormat.hls,
+          cacheConfiguration: const BetterPlayerCacheConfiguration(
+            useCache: true,
+            maxCacheFileSize: 100 * 1024 * 1024,
+            maxCacheSize: 1000 * 1024 * 1024,
+          ),
+        );
 
-      _betterPlayerController =
-          BetterPlayerController(betterPlayerConfiguration);
-      _betterPlayerController.setupDataSource(dataSource);
-      videoDetailController.videoPlayerReady.value = true;
+        _betterPlayerController =
+            BetterPlayerController(betterPlayerConfiguration);
+        _betterPlayerController.setupDataSource(dataSource);
+        videoDetailController.videoPlayerReady.value = true;
+      }
     }
 
     return SafeArea(

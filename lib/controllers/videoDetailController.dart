@@ -9,6 +9,7 @@ class VideoDetailController extends GetxController {
   var addingToWatchList = false.obs;
   var videoPlayerReady = false.obs;
   var isTrailer = false.obs;
+  var isBlocked = false.obs;
 
   @override
   void onInit() {

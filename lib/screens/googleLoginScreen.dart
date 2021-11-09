@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:idragon_pro/constants.dart';
 import 'package:idragon_pro/controllers/loginController.dart';
+import 'package:idragon_pro/screens/emailLoginScreen.dart';
+import 'package:idragon_pro/widgets/roundCornerButton.dart';
 import 'package:idragon_pro/widgets/roundCornerIconButton.dart';
 
 class GoogleLoginScreen extends StatelessWidget {
@@ -52,7 +56,7 @@ class GoogleLoginScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Click Enter to Login',
+                            'Click Enter to Log In',
                             style: TextStyle(
                               fontSize: 18,
                             ),
@@ -65,35 +69,45 @@ class GoogleLoginScreen extends StatelessWidget {
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
-                          RoundCornerIconButton(
+                          if (Platform.isIOS)
+                            RoundCornerButton(
                               buttonText: 'Enter',
                               width: MediaQuery.of(context).size.width * 0.4,
                               onpressed: () {
-                                _googleSignIn.signIn().then((userData) {
-                                  print(userData!.displayName! +
-                                      " " +
-                                      userData.email);
-
-                                  iDragon_data.write(
-                                      Constant().IS_GOOGLE_LOGIN, true);
-                                  iDragon_data.write(
-                                      Constant().GOOGLE_ID, userData.id);
-                                  iDragon_data.write(
-                                      Constant().GOOGLE_EMAIL, userData.email);
-                                  iDragon_data.write(Constant().GOOGLE_NAME,
-                                      userData.displayName);
-                                  iDragon_data.write(Constant().GOOGLE_PROFILE,
-                                      userData.photoUrl);
-
-                                  loginController.fetchGoogleLoginResponse(
-                                      userData.displayName.toString(),
-                                      userData.email,
-                                      userData.photoUrl.toString());
-                                }).catchError((e) {
-                                  print(e);
-                                });
+                                Get.to(() => EmailLoginScreen());
                               },
-                              imagePath: 'assets/google.png'),
+                            ),
+                          if (!Platform.isIOS)
+                            RoundCornerIconButton(
+                                buttonText: 'Enter',
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                onpressed: () {
+                                  _googleSignIn.signIn().then((userData) {
+                                    print(userData!.displayName! +
+                                        " " +
+                                        userData.email);
+
+                                    iDragon_data.write(
+                                        Constant().IS_GOOGLE_LOGIN, true);
+                                    iDragon_data.write(
+                                        Constant().GOOGLE_ID, userData.id);
+                                    iDragon_data.write(Constant().GOOGLE_EMAIL,
+                                        userData.email);
+                                    iDragon_data.write(Constant().GOOGLE_NAME,
+                                        userData.displayName);
+                                    iDragon_data.write(
+                                        Constant().GOOGLE_PROFILE,
+                                        userData.photoUrl);
+
+                                    loginController.fetchGoogleLoginResponse(
+                                        userData.displayName.toString(),
+                                        userData.email,
+                                        userData.photoUrl.toString());
+                                  }).catchError((e) {
+                                    print(e);
+                                  });
+                                },
+                                imagePath: 'assets/google.png'),
                         ],
                       ),
                     ],

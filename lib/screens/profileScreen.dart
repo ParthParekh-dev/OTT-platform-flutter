@@ -78,12 +78,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ClipOval(
-                      child: Image.network(
-                        iDragon_data.read(Constant().GOOGLE_PROFILE),
-                        width: 180,
-                        height: 180,
-                        fit: BoxFit.cover,
-                      ),
+                      child:
+                          (iDragon_data.read(Constant().GOOGLE_PROFILE) == '')
+                              ? (Image.asset(
+                                  'assets/login.png',
+                                  width: 180,
+                                  height: 180,
+                                  fit: BoxFit.cover,
+                                ))
+                              : Image.network(
+                                  iDragon_data.read(Constant().GOOGLE_PROFILE),
+                                  width: 180,
+                                  height: 180,
+                                  fit: BoxFit.cover,
+                                ),
                     ),
                   ),
                   Padding(
