@@ -453,7 +453,7 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
         }
         const BOOL isLive = CMTIME_IS_INDEFINITE([_player currentItem].duration);
         // The player may be initialized but still needs to determine the duration.
-        if (isLive == false && [self duration] == 0) {
+        if (isLive == false) {
             return;
         }
 
