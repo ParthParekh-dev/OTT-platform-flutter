@@ -453,9 +453,9 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
         }
         const BOOL isLive = CMTIME_IS_INDEFINITE([_player currentItem].duration);
         // The player may be initialized but still needs to determine the duration.
-        if (isLive == false) {
-            return;
-        }
+        //if (isLive == false && [self duration] == 0) {
+          //  return;
+        //}
 
         //Fix from https://github.com/flutter/flutter/issues/66413
         AVPlayerItemTrack *track = [self.player currentItem].tracks.firstObject;
