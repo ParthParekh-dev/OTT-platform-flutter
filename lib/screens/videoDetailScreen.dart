@@ -79,6 +79,8 @@ class VideoDetailScreen extends StatelessWidget {
           BetterPlayerConfiguration(
               autoPlay: true,
               fullScreenByDefault: false,
+              fullScreenAspectRatio: MediaQuery.of(context).size.width /
+                  MediaQuery.of(context).size.height,
               deviceOrientationsOnFullScreen: [
                 DeviceOrientation.landscapeLeft,
                 DeviceOrientation.landscapeRight
@@ -86,14 +88,20 @@ class VideoDetailScreen extends StatelessWidget {
               autoDetectFullscreenDeviceOrientation: false,
               deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
               controlsConfiguration: controlsConfiguration,
-              aspectRatio: MediaQuery.of(context).size.width /
-                  MediaQuery.of(context).size.height,
               allowedScreenSleep: false,
               fit: BoxFit.cover);
 
       BetterPlayerDataSource dataSource = BetterPlayerDataSource(
         BetterPlayerDataSourceType.network,
         videoUrl,
+        videoFormat: (videoDetailController.isTrailer.value)
+            ? null
+            : BetterPlayerVideoFormat.hls,
+        cacheConfiguration: const BetterPlayerCacheConfiguration(
+          useCache: true,
+          maxCacheFileSize: 100 * 1024 * 1024,
+          maxCacheSize: 1000 * 1024 * 1024,
+        ),
       );
 
       _betterPlayerController =
@@ -212,6 +220,7 @@ class VideoDetailScreen extends StatelessWidget {
                                 buttonText: 'trailer'.tr,
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 onpressed: () {
+                                  videoDetailController.isTrailer.value = true;
                                   activateVideoPlayer(
                                       videoUrl: videoDetailController
                                           .videoDetails.value!.trailerUrl);
@@ -226,6 +235,7 @@ class VideoDetailScreen extends StatelessWidget {
                                 buttonText: 'play'.tr,
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 onpressed: () async {
+                                  videoDetailController.isTrailer.value = false;
                                   var videoDetail =
                                       videoDetailController.videoDetails.value!;
 

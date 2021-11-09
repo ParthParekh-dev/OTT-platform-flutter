@@ -54,50 +54,50 @@ class User {
   });
 
   int id;
-  String name;
-  String lastname;
-  String mobileno;
-  String age;
-  String email;
+  String? name;
+  String? lastname;
+  String? mobileno;
+  String? age;
+  String? email;
   String? sGender;
   String? sNoti;
-  dynamic subscription;
-  dynamic remdays;
-  dynamic videoid;
-  dynamic subscriptionweb;
-  dynamic remdaysweb;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  dynamic roleId;
-  String deviceId1;
-  dynamic deviceId2;
-  String firebaseId1;
-  dynamic firebaseId2;
+  dynamic? subscription;
+  dynamic? remdays;
+  dynamic? videoid;
+  dynamic? subscriptionweb;
+  dynamic? remdaysweb;
+  String? createdAt;
+  String? updatedAt;
+  dynamic? roleId;
+  dynamic? deviceId1;
+  dynamic? deviceId2;
+  dynamic? firebaseId1;
+  dynamic? firebaseId2;
   String? profilePic;
   String? isNotificationActive;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
-        name: json["name"],
-        lastname: json["lastname"],
-        mobileno: json["mobileno"],
-        age: json["age"],
-        email: json["email"],
-        sGender: json["sGender"],
+        name: json["name"].toString(),
+        lastname: json["lastname"].toString(),
+        mobileno: json["mobileno"].toString(),
+        age: json["age"].toString(),
+        email: json["email"].toString(),
+        sGender: json["sGender"].toString(),
         sNoti: json["sNoti"].toString(),
         subscription: json["subscription"],
         remdays: json["remdays"],
         videoid: json["videoid"],
         subscriptionweb: json["subscriptionweb"],
         remdaysweb: json["remdaysweb"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"].toString(),
+        updatedAt: json["updated_at"].toString(),
         roleId: json["role_id"],
         deviceId1: json["deviceId_1"],
         deviceId2: json["deviceId_2"],
         firebaseId1: json["firebaseId_1"],
         firebaseId2: json["firebaseId_2"],
-        profilePic: json["profile_pic"],
+        profilePic: json["profile_pic"].toString(),
         isNotificationActive: json["IsNotificationActive"],
       );
 

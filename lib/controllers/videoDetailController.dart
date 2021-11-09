@@ -8,6 +8,7 @@ class VideoDetailController extends GetxController {
   var isLoading = true.obs;
   var addingToWatchList = false.obs;
   var videoPlayerReady = false.obs;
+  var isTrailer = false.obs;
 
   @override
   void onInit() {
