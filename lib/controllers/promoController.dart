@@ -48,7 +48,7 @@ class PromoController extends GetxController {
 
         print('=+++++++++++++++++' + promoDetails.value!.flashVideoUrl);
 
-        _start = int.parse(result.promoflash.flashTime) + 3;
+        _start = int.parse(result.promoflash.flashTime);
       }
     } finally {
       isTimerOver(false);
