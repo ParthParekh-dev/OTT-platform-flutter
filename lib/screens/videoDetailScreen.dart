@@ -346,7 +346,7 @@ class VideoDetailScreen extends StatelessWidget {
                                         title: 'coming_soon'.tr,
                                         middleText: 'Stay tuned');
                                   } else if (videoDetail.isFree == "Yes" ||
-                                      videoDetail.isIosFree == "1") {
+                                      videoDetail.isIosFree == "0") {
                                     activateVideoPlayer(
                                         videoUrl: videoDetail.videoUrl);
                                   } else {
