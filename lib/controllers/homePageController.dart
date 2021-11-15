@@ -26,7 +26,6 @@ class HomePageController extends GetxController {
       if (result != null) {
         if (result.status == true) {
           userDetails.value = result.user;
-          print(userDetailsResponseToJson(result));
 
           if (result.user.subscriptions != null &&
               result.user.timediff != null &&
@@ -58,6 +57,11 @@ class HomePageController extends GetxController {
         GetStorage().write(Constant().IS_MOVIE_SUBS, false);
         GetStorage().write(Constant().IS_WEB_SUBS, false);
       }
+    } catch (exp) {
+      Get.snackbar("Error fetching user details", "",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.white,
+          colorText: Colors.black);
     } finally {
       isLoading(false);
     }

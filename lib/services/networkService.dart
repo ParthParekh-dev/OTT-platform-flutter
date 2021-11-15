@@ -16,7 +16,6 @@ import 'package:idragon_pro/models/userDetailsReponse.dart';
 import 'package:idragon_pro/models/videoDetailResponse.dart';
 import 'package:idragon_pro/models/watchListResponse.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:idragon_pro/screens/editProfileScreen.dart';
 
 class NetworkService {
   Future<UserDetailsResponse?> fetchUserDetails() async {
@@ -24,11 +23,19 @@ class NetworkService {
     late var model;
 
     if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      model = iosInfo.utsname.machine;
+      try {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        model = iosInfo.utsname.machine;
+      } catch (exp) {
+        model = "iphone";
+      }
     } else {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      model = androidInfo.model;
+      try {
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        model = androidInfo.model;
+      } catch (exp) {
+        model = "android";
+      }
     }
 
     http.Response response = await http.post(
