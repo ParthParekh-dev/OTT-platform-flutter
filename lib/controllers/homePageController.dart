@@ -56,6 +56,10 @@ class HomePageController extends GetxController {
       } else {
         GetStorage().write(Constant().IS_MOVIE_SUBS, false);
         GetStorage().write(Constant().IS_WEB_SUBS, false);
+        Get.snackbar("Error fetching subscription details", "",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.white,
+            colorText: Colors.black);
       }
     } catch (exp) {
       Get.snackbar("Error fetching user details", "",
