@@ -62,7 +62,7 @@ class HomePageController extends GetxController {
             colorText: Colors.black);
       }
     } catch (exp) {
-      Get.snackbar("Error fetching user details", "",
+      Get.snackbar("Error fetching user details", "$exp",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.white,
           colorText: Colors.black);
